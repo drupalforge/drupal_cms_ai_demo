@@ -1,0 +1,8 @@
+{
+    "name": "PHP 8.3",
+    "image": "devpanel/php:8.3-base",
+	"forwardPorts": [
+		80,
+		443
+	]
+}

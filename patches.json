@@ -1,0 +1,7 @@
+{
+    "patches": {
+        "drupal/automatic_updates": {
+            "#3498018: Add configuration for additional known files in project root": "https://git.drupalcode.org/project/automatic_updates/-/merge_requests/1099.patch"
+        }
+    }
+}

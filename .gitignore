@@ -1,0 +1,15 @@
+/.devpanel/dumps/
+/.devpanel/salt.txt
+/.editorconfig
+/.gitattributes
+/.vscode/
+/composer.json
+/composer.lock
+/config/
+/logs/*
+/patches.lock.json
+/private/
+/README.md
+/recipes/
+/vendor/
+/web/
