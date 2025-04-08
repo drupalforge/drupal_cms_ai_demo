@@ -17,12 +17,9 @@
 
 #== Import database
 if [[ $(mysql -h$DB_HOST -P$DB_PORT -u$DB_USER -p$DB_PASSWORD $DB_NAME -e "show tables;") == '' ]]; then
-  if [[ -f "$APP_ROOT/.devpanel/dumps/db.sql.tgz" ]]; then
-    echo  'Extract mysql files ...'
-    SQLFILE=$(tar tzf $APP_ROOT/.devpanel/dumps/db.sql.tgz)
-    tar xzf "$APP_ROOT/.devpanel/dumps/db.sql.tgz" -C /tmp/
-    mysql -h$DB_HOST -P$DB_PORT -u$DB_USER -p$DB_PASSWORD $DB_NAME < /tmp/$SQLFILE
-    rm /tmp/$SQLFILE
-    sudo rm -rf $APP_ROOT/.devpanel/dumps/db.sql.tgz
+  if [[ -f "$APP_ROOT/.devpanel/dumps/db.sql.gz" ]]; then
+    echo  'Import mysql file ...'
+    drush sqlq --file="$APP_ROOT/.devpanel/dumps/db.sql.gz"
+    sudo rm -rf $APP_ROOT/.devpanel/dumps/db.sql.gz
   fi
 fi
