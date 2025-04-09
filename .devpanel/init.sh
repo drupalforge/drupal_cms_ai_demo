@@ -32,6 +32,13 @@ if [ ! -d private ]; then
   time mkdir private
 fi
 
+#== Create the config sync directory.
+if [ ! -d config/sync ]; then
+  echo
+  echo 'Create the config sync directory.'
+  time mkdir -p config/sync
+fi
+
 #== Generate hash salt.
 if [ ! -f .devpanel/salt.txt ]; then
   echo
