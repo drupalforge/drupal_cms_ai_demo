@@ -32,3 +32,12 @@ fi
 if $PECL_UPDATED && sudo /etc/init.d/apache2 status > /dev/null; then
   sudo /etc/init.d/apache2 reload
 fi
+
+# Install VSCode Extensions
+if [[ -n "$DP_VSCODE_EXTENSIONS" ]]; then
+    sudo chown -R www:www $APP_ROOT/.vscode/extensions/
+    IFS=','
+    for value in $DP_VSCODE_EXTENSIONS; do
+        code-server --install-extension $value --user-data-dir=$APP_ROOT/.vscode
+    done
+fi
