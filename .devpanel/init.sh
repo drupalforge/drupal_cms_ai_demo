@@ -52,18 +52,26 @@ if [ -z "$(mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME -e 
 
   #== Apply the AI recipe.
   if [ -n "${DP_AI_VIRTUAL_KEY:-}" ]; then
-    drush -q recipe ../recipes/drupal_cms_ai \
-      --input=drupal_cms_ai.provider=openai \
-      --input=drupal_cms_ai.openai_api_key=$DP_AI_VIRTUAL_KEY
-    drush config:set -n ai_provider_openai.settings host "https://ai.drupalforge.org"
-    drush config:set -n ai_provider_openai.settings moderation false --input-format yaml
-    drush config:set -n ai.settings default_providers.chat.provider_id openai
-    drush config:set -n ai.settings default_providers.chat.model_id gpt-4
-    drush -n key-save openai_api_key --key-provider=env --key-provider-settings='{
+    drush -n en ai_provider_litellm
+    drush -n key-save litellm_api_key --label="LiteLLM API key" --key-provider=env --key-provider-settings='{
       "env_variable": "DP_AI_VIRTUAL_KEY",
       "base64_encoded": false,
       "strip_line_breaks": true
     }'
+    drush -n cset ai_provider_litellm.settings api_key litellm_api_key
+    drush -n cset ai_provider_litellm.settings moderation false --input-format yaml
+    drush -n cset ai_provider_litellm.settings host "https://ai.drupalforge.org"
+    drush -q recipe ../recipes/drupal_cms_ai --input=drupal_cms_ai.provider=litellm
+    drush -n cset ai.settings default_providers.chat.provider_id litellm
+    drush -n cset ai.settings default_providers.chat.model_id openai/gpt-4o-mini
+    drush -n cset ai.settings default_providers.chat_with_complex_json.provider_id litellm
+    drush -n cset ai.settings default_providers.chat_with_complex_json.model_id openai/gpt-4o-mini
+    drush -n cset ai.settings default_providers.chat_with_image_vision.provider_id litellm
+    drush -n cset ai.settings default_providers.chat_with_image_vision.model_id openai/gpt-4o-mini
+    drush -n cset ai.settings default_providers.embeddings.provider_id litellm
+    drush -n cset ai.settings default_providers.embeddings.model_id openai/text-embedding-3-small
+    drush -n cset ai.settings default_providers.text_to_speech.provider_id litellm
+    drush -n cset ai.settings default_providers.text_to_speech.model_id openai/gpt-4o-mini-realtime-preview
   fi
 
   echo

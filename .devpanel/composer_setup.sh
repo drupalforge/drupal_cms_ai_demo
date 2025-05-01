@@ -214,6 +214,7 @@ composer config repositories.codemirror '{
 composer require -n --no-plugins --no-update \
     codemirror/codemirror \
     cweagans/composer-patches:^2@beta \
+    drupal/ai_provider_litellm:@beta \
     jquery/inputmask \
     jquery/intl-tel-input \
     jquery/rateit \
