@@ -47,6 +47,7 @@ if [ ! -f .devpanel/salt.txt ]; then
 fi
 
 #== Install Drupal.
+echo
 if [ -z "$(mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME -e 'show tables')" ]; then
   time drush -n si
 
@@ -79,6 +80,16 @@ if [ -z "$(mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME -e 
   time drush -n cset --input-format=yaml package_manager.settings additional_known_files_in_project_root '["patches.json", "patches.lock.json"]'
 else
   drush -n updb
+fi
+
+#== Warm up caches.
+echo
+echo 'Run cron.'
+time drush cron
+echo
+echo 'Populate caches.'
+if ! time drush cache:warm 2> /dev/null; then
+  time .devpanel/warm > /dev/null
 fi
 
 #== Finish measuring script time.
