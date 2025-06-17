@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+: "${DEBUG_SCRIPT:=}"
+if [ -n "$DEBUG_SCRIPT" ]; then
+  set -x
+fi
 set -eu -o pipefail
 cd $APP_ROOT
 
