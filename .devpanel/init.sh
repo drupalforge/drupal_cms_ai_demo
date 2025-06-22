@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-: "${DEBUG_SCRIPT:=}"
-if [ -n "$DEBUG_SCRIPT" ]; then
+if [ -n "${DEBUG_SCRIPT:-}" ]; then
   set -x
 fi
 set -eu -o pipefail
@@ -14,6 +13,15 @@ TIMEFORMAT=%lR
 export COMPOSER_NO_AUDIT=1
 # For faster performance, don't install dev dependencies.
 export COMPOSER_NO_DEV=1
+
+# Install VSCode Extensions
+if [[ -n "${DP_VSCODE_EXTENSIONS:-}" ]]; then
+  sudo chown -R $(id -un):$(id -gn) $APP_ROOT/.vscode/extensions/
+  IFS=','
+  for value in $DP_VSCODE_EXTENSIONS; do
+    time code-server --install-extension $value --user-data-dir=$APP_ROOT/.vscode
+  done
+fi
 
 #== Remove root-owned files.
 echo
