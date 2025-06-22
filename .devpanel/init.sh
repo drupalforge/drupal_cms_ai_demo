@@ -80,6 +80,7 @@ if [ -z "$(mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME -e 
     drush -n cset ai.settings default_providers.embeddings.model_id openai/text-embedding-3-small
     drush -n cset ai.settings default_providers.text_to_speech.provider_id litellm
     drush -n cset ai.settings default_providers.text_to_speech.model_id openai/gpt-4o-mini-realtime-preview
+    drush -n cset klaro.klaro_app.deepchat status 0
   fi
 
   echo
