@@ -21,7 +21,10 @@ echo Remove root-owned files.
 time sudo rm -rf lost+found
 
 #== Composer install.
-if [ ! -f composer.json ]; then
+if [ -f composer.json ]; then
+  echo
+  time composer prl
+else
   echo
   echo 'Generate composer.json.'
   time source .devpanel/composer_setup.sh
@@ -81,7 +84,9 @@ if [ -z "$(mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME -e 
 
   echo
   echo 'Tell Automatic Updates about patches.'
+  time drush -n cset --input-format=yaml package_manager.settings additional_trusted_composer_plugins '["cweagans/composer-patches"]'
   time drush -n cset --input-format=yaml package_manager.settings additional_known_files_in_project_root '["patches.json", "patches.lock.json"]'
+  time drush ev '\Drupal::moduleHandler()->invoke("automatic_updates", "modules_installed", [[], FALSE])'
 else
   drush -n updb
 fi
@@ -92,9 +97,8 @@ echo 'Run cron.'
 time drush cron
 echo
 echo 'Populate caches.'
-if ! time drush cache:warm 2> /dev/null; then
-  time .devpanel/warm > /dev/null
-fi
+time drush cache:warm
+time .devpanel/warm
 
 #== Finish measuring script time.
 INIT_DURATION=$SECONDS
