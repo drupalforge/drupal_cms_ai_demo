@@ -16,10 +16,9 @@ export COMPOSER_NO_DEV=1
 
 # Install VSCode Extensions
 if [[ -n "${DP_VSCODE_EXTENSIONS:-}" ]]; then
-  sudo chown -R $(id -un):$(id -gn) $APP_ROOT/.vscode/extensions/
   IFS=','
   for value in $DP_VSCODE_EXTENSIONS; do
-    time code-server --install-extension $value --user-data-dir=$APP_ROOT/.vscode
+    time code-server --install-extension $value
   done
 fi
 
@@ -29,11 +28,10 @@ echo Remove root-owned files.
 time sudo rm -rf lost+found
 
 #== Composer install.
+echo
 if [ -f composer.json ]; then
-  echo
   time composer prl
 else
-  echo
   echo 'Generate composer.json.'
   time source .devpanel/composer_setup.sh
 fi
@@ -103,7 +101,7 @@ if [ -z "$(mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME -e 
   drush -n cset --input-format=yaml package_manager.settings additional_known_files_in_project_root '["patches.json", "patches.lock.json"]'
   time drush ev '\Drupal::moduleHandler()->invoke("automatic_updates", "modules_installed", [[], FALSE])'
 else
-  drush -n updb
+  time drush -n updb
 fi
 
 #== Warm up caches.

@@ -16,7 +16,7 @@ ddev_version_constraint: '>=1.24.0'
 hooks:
     post-start:
         # Set up debugging.
-        - exec: 'test -f .vscode/launch.json || (mkdir -p .vscode && cp .ddev/launch.json .vscode/)'
+        - exec: 'test -f .vscode/launch.json || mkdir -p .vscode && cp .ddev/launch.json .vscode/'
         # Run initial setup tasks.
         - exec: '.devpanel/init.sh'
 web_environment:
