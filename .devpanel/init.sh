@@ -68,7 +68,8 @@ if [ -z "$(mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME -e 
 
   #== Apply the AI recipe.
   if [ -n "${DP_AI_VIRTUAL_KEY:-}" ]; then
-    drush -n en ai_provider_litellm
+    echo
+    time drush -n en ai_provider_litellm
     drush -n key-save litellm_api_key --label="LiteLLM API key" --key-provider=env --key-provider-settings='{
       "env_variable": "DP_AI_VIRTUAL_KEY",
       "base64_encoded": false,
@@ -84,17 +85,22 @@ if [ -z "$(mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME -e 
     drush -n cset ai.settings default_providers.chat_with_complex_json.model_id openai/gpt-4o-mini
     drush -n cset ai.settings default_providers.chat_with_image_vision.provider_id litellm
     drush -n cset ai.settings default_providers.chat_with_image_vision.model_id openai/gpt-4o-mini
+    drush -n cset ai.settings default_providers.chat_with_structured_response.provider_id litellm
+    drush -n cset ai.settings default_providers.chat_with_structured_response.model_id openai/gpt-4o-mini
+    drush -n cset ai.settings default_providers.chat_with_tools.provider_id litellm
+    drush -n cset ai.settings default_providers.chat_with_tools.model_id openai/gpt-4o-mini
     drush -n cset ai.settings default_providers.embeddings.provider_id litellm
     drush -n cset ai.settings default_providers.embeddings.model_id openai/text-embedding-3-small
     drush -n cset ai.settings default_providers.text_to_speech.provider_id litellm
     drush -n cset ai.settings default_providers.text_to_speech.model_id openai/gpt-4o-mini-realtime-preview
+    drush -n cset ai_assistant_api.ai_assistant.drupal_cms_assistant llm_provider __default__
     drush -n cset klaro.klaro_app.deepchat status 0
   fi
 
   echo
   echo 'Tell Automatic Updates about patches.'
-  time drush -n cset --input-format=yaml package_manager.settings additional_trusted_composer_plugins '["cweagans/composer-patches"]'
-  time drush -n cset --input-format=yaml package_manager.settings additional_known_files_in_project_root '["patches.json", "patches.lock.json"]'
+  drush -n cset --input-format=yaml package_manager.settings additional_trusted_composer_plugins '["cweagans/composer-patches"]'
+  drush -n cset --input-format=yaml package_manager.settings additional_known_files_in_project_root '["patches.json", "patches.lock.json"]'
   time drush ev '\Drupal::moduleHandler()->invoke("automatic_updates", "modules_installed", [[], FALSE])'
 else
   drush -n updb
