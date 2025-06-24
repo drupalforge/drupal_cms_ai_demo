@@ -4,7 +4,7 @@ Files in the `.devpanel` directory control DevPanel deployment for this app.
 ## Startup scripts
 
 - [`custom_package_installer.sh`](custom_package_installer.sh): Installs
-  extra system software. Runs as root.
+  extra system software. Use sudo to run as root.
 - [`init-container.sh`](init-container.sh): Checks for a database dump and
   imports it.
 - [`init.sh`](init.sh): Performs additional startup tasks. Supporting files:

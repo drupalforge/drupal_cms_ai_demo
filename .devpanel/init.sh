@@ -15,7 +15,7 @@ export COMPOSER_NO_AUDIT=1
 export COMPOSER_NO_DEV=1
 
 # Install VSCode Extensions
-if [[ -n "${DP_VSCODE_EXTENSIONS:-}" ]]; then
+if [ -n "${DP_VSCODE_EXTENSIONS:-}" ]; then
   IFS=','
   for value in $DP_VSCODE_EXTENSIONS; do
     time code-server --install-extension $value
