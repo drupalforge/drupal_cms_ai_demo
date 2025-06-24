@@ -40,8 +40,8 @@ DRUPAL_HASH_SALT=$(openssl rand -hex 32);
 echo $DRUPAL_HASH_SALT > $APP_ROOT/.devpanel/salt.txt
 
 
-# #Securing file permissions and ownership
-# #https://www.drupal.org/docs/security-in-drupal/securing-file-permissions-and-ownership
+# Securing file permissions and ownership
+# https://www.drupal.org/docs/security-in-drupal/securing-file-permissions-and-ownership
 [[ ! -d $STATIC_FILES_PATH ]] && sudo mkdir --mode 775 $STATIC_FILES_PATH || sudo chmod 775 -R $STATIC_FILES_PATH
 
 #== Extract static files
@@ -56,7 +56,6 @@ if [[ $(mysql -h$DB_HOST -P$DB_PORT -u$DB_USER -p$DB_PASSWORD $DB_NAME -e "show 
   #== Import mysql files
   if [[ -f "$APP_ROOT/.devpanel/dumps/db.sql.gz" ]]; then
     echo  'Import mysql file ...'
-    drush sqlq --file="$APP_ROOT/.devpanel/dumps/db.sql.gz"
-    sudo rm -rf $APP_ROOT/.devpanel/dumps/db.sql.gz
+    drush sqlq --file="$APP_ROOT/.devpanel/dumps/db.sql.gz" --file-delete
   fi
 fi
