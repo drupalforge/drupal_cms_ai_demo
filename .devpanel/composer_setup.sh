@@ -10,6 +10,16 @@ rm -rf cms patches.lock.json
 # Programmatically fix Composer 2.2 allow-plugins to avoid errors
 composer config --no-plugins allow-plugins.cweagans/composer-patches true
 
+# Scaffold settings.php.
+composer config -jm extra.drupal-scaffold.file-mapping '{
+    "[web-root]/sites/default/settings.php": {
+        "path": "web/core/assets/scaffold/files/default.settings.php",
+        "overwrite": false
+    }
+}'
+composer config scripts.post-drupal-scaffold-cmd \
+    'cd web/sites/default && test -z "$(grep '\''include \$devpanel_settings;'\'' settings.php)" && patch -Np1 -r /dev/null < $APP_ROOT/.devpanel/drupal-settings.patch || :'
+
 # Add repositories for Webform libraries.
 composer config repositories.tippyjs '{
     "type": "package",
@@ -203,7 +213,7 @@ composer config repositories.codemirror '{
         "license": "MIT"
     }
 }'
-composer require -n --no-plugins --no-update \
+composer require -n --no-update \
     codemirror/codemirror \
     cweagans/composer-patches:^2@beta \
     drupal/ai_provider_litellm:@beta \
@@ -218,13 +228,3 @@ composer require -n --no-plugins --no-update \
     signature_pad/signature_pad \
     tabby/tabby \
     tippyjs/tippyjs
-
-# Scaffold settings.php.
-composer config --no-plugins -jm extra.drupal-scaffold.file-mapping '{
-    "[web-root]/sites/default/settings.php": {
-        "path": "web/core/assets/scaffold/files/default.settings.php",
-        "overwrite": false
-    }
-}'
-composer config --no-plugins scripts.post-drupal-scaffold-cmd \
-    'cd web/sites/default && (test -n "$(grep '\''include \$devpanel_settings;'\'' settings.php)" || patch -Np1 -r /dev/null < $APP_ROOT/.devpanel/drupal-settings.patch || :)'

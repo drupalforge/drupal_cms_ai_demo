@@ -31,5 +31,11 @@ if [[ -n "$DB_SYNC_VOL" ]]; then
   fi
 fi
 
-echo 'cache:rebuild'
-drush cr;
+drush -n updb
+echo
+echo 'Run cron.'
+drush cron
+echo
+echo 'Populate caches.'
+drush cache:warm
+$APP_ROOT/.devpanel/warm

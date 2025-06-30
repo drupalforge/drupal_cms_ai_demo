@@ -30,12 +30,16 @@ time sudo rm -rf lost+found
 #== Composer install.
 echo
 if [ -f composer.json ]; then
-  time composer prl
+  if composer show --locked cweagans/composer-patches ^2 &> /dev/null; then
+    echo 'Update patches.lock.json.'
+    time composer prl
+    echo
+  fi
 else
   echo 'Generate composer.json.'
   time source .devpanel/composer_setup.sh
+  echo
 fi
-echo
 time composer -n update --no-dev --no-progress
 
 #== Create the private files directory.
@@ -61,7 +65,8 @@ fi
 
 #== Install Drupal.
 echo
-if [ -z "$(mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME -e 'show tables')" ]; then
+if [ -z "$(drush status --field=db-status)" ]; then
+  echo 'Install Drupal.'
   time drush -n si
 
   #== Apply the AI recipe.
@@ -101,6 +106,7 @@ if [ -z "$(mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME -e 
   drush -n cset --input-format=yaml package_manager.settings additional_known_files_in_project_root '["patches.json", "patches.lock.json"]'
   time drush ev '\Drupal::moduleHandler()->invoke("automatic_updates", "modules_installed", [[], FALSE])'
 else
+  echo 'Update database.'
   time drush -n updb
 fi
 

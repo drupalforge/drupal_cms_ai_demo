@@ -28,6 +28,6 @@ web_environment:
     - DB_USER=db
     - DB_PASSWORD=db
     - DB_NAME=db
-    - DP_APP_ID=drupal_cms
+    - DP_APP_ID=ai_demo
     - DB_DRIVER=mysql
     - DP_AI_VIRTUAL_KEY=
