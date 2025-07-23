@@ -32,6 +32,6 @@ Files in the `.devpanel` directory control DevPanel deployment for this app.
 
 ## Creating a Docker image
 
-- [`create_quickstart.sh`](quickstart/create_quickstart.sh): Archives the
+- [`create_quickstart.sh`](create_quickstart.sh): Archives the
   database and files for the _Drupal Forge Docker Publish Workflow_ which can be
   added in [GitHub Actions](https://github.com/drupalforge/starter_template/actions).
