@@ -8,16 +8,14 @@ additional_fqdns: []
 database:
     type: mysql
     version: "8.0"
-use_dns_when_possible: true
-composer_version: "2"
-corepack_enable: false
-ddev_version_constraint: '>=1.24.0'
 hooks:
     post-start:
         # Set up debugging.
-        - exec: 'test -f .vscode/launch.json || mkdir -p .vscode && cp .ddev/launch.json .vscode/'
+        - exec: test -f .vscode/launch.json || mkdir -p .vscode && cp .ddev/launch.json .vscode/
         # Run initial setup tasks.
-        - exec: '.devpanel/init.sh'
+        - exec: .devpanel/init.sh
+use_dns_when_possible: true
+composer_version: "2"
 web_environment:
     # Set up DevPanel variables.
     - APP_ROOT=$DDEV_COMPOSER_ROOT
@@ -30,3 +28,5 @@ web_environment:
     - DP_APP_ID=ai_demo
     - DB_DRIVER=mysql
     - DP_AI_VIRTUAL_KEY=
+corepack_enable: false
+ddev_version_constraint: '>=1.24.0'

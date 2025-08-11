@@ -1,8 +1,12 @@
 {
-    "name": "PHP 8.3",
-    "image": "devpanel/php:8.3-base",
+    "name": "Drupal CMS AI Demo (PHP 8.3)",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/var/www/html",
+    "shutdownAction": "stopCompose",
 	"forwardPorts": [
-		80,
-		443
-	]
+		80
+	],
+    "updateContentCommand": ".devpanel/init.sh",
+    "remoteUser": "www"
 }

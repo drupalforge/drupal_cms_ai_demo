@@ -9,11 +9,12 @@ Files in the `.devpanel` directory control DevPanel deployment for this app.
   imports it.
 - [`init.sh`](init.sh): Performs additional startup tasks. Supporting files:
   - [`composer_setup.sh`](composer_setup.sh): Generates composer.json and
-    composer.lock.
+    composer.lock files. Not needed if you supply these files yourself.
   - [`settings.devpanel.php`](settings.devpanel.php): Settings for running
     Drupal as a DevPanel app.
   - [`drupal-settings.patch`](drupal-settings.patch): Patch for settings.php
-    to include settings.devpanel.php.
+    to include settings.devpanel.php. Installed by the post-drupal-scaffold-cmd
+    script. Make sure this works with your Composer project.
   - [`warm`](warm): Loads any path to build caches. If no path is provided,
     defaults to /.
 
@@ -32,6 +33,6 @@ Files in the `.devpanel` directory control DevPanel deployment for this app.
 
 ## Creating a Docker image
 
-- [`create_quickstart.sh`](create_quickstart.sh): Archives the
-  database and files for the _Drupal Forge Docker Publish Workflow_ which can be
-  added in [GitHub Actions](https://github.com/drupalforge/starter_template/actions).
+- [`create_quickstart.sh`](create_quickstart.sh): Archives the database and
+  files for the _Drupal Forge Docker Publish Workflow_ which can be added in
+  [GitHub Actions](../../actions).
