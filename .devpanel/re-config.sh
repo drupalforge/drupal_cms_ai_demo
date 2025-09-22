@@ -59,3 +59,5 @@ if [[ $(mysql -h$DB_HOST -P$DB_PORT -u$DB_USER -p$DB_PASSWORD $DB_NAME -e "show 
     drush sqlq --file="$APP_ROOT/.devpanel/dumps/db.sql.gz" --file-delete
   fi
 fi
+
+drush cr
