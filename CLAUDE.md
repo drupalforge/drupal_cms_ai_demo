@@ -11,6 +11,10 @@ This is a **demo site repository** hosted on GitHub that:
 
 The `flowdrop_ui_agents` module has its **own git repository** on drupal.org GitLab. Development on that module should follow Drupal.org workflow (issue first, then feature branch).
 
+Do not do things that require AUTH. Generally Assume the user has to input git commands and give the commands to the User to do themselves (make sure we're pushing to the right place)
+
+This repo has two build processes. Live via DevPanel and scripts in .DevPanel and locally via DDEV and the command ddev setup-flowdrop-dev
+
 ## Two-Repo Workflow
 
 ```

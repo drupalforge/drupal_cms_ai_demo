@@ -28,8 +28,11 @@ Per-branch tracking for the current work session.
 # Check module branch
 cd modules/flowdrop_ui_agents && git branch --show-current
 
-# See changes on branch
+# See changes on branch (compare to 1.0.x)
 cd modules/flowdrop_ui_agents && git log --oneline 1.0.x..HEAD
+
+# Push to issue fork
+cd modules/flowdrop_ui_agents && git push flowdrop_ui_agents-3563756 3563756-support-multi-agents-and
 
 # Clear Drupal cache after changes
 ddev drush cr

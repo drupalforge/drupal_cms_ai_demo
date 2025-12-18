@@ -111,8 +111,12 @@ else
   time drush -n updb
 fi
 
-#== Install Flowdrop modules.
-drush -y pm:en flowdrop_ui flowdrop_ui_agents ai_provider_openai
+#== Install Flowdrop modules and AI explorer/logging tools.
+drush -y pm:en flowdrop_ui flowdrop_ui_agents ai_provider_openai ai_agents_explorer ai_api_explorer ai_logging ai_observability
+
+#== Enable AI logging (requests and responses).
+drush -n cset ai_logging.settings prompt_logging true
+drush -n cset ai_logging.settings prompt_logging_output true
 
 #== Warm up caches.
 echo

@@ -5,12 +5,36 @@
 ## Example: "ddev setup-flowdrop-dev"
 ## ExecRaw: true
 
-echo "Cloning the Flowdrop UI Agents module from the Flowdrop repository..."
-cd modules && git clone git@git.drupal.org:project/flowdrop_ui_agents.git
+if [ -d "modules/flowdrop_ui_agents" ]; then
+  echo "Flowdrop UI Agents module already cloned, skipping..."
+else
+  echo "Cloning the Flowdrop UI Agents module from the Flowdrop repository..."
+  cd modules && git clone git@git.drupal.org:project/flowdrop_ui_agents.git && cd ..
+fi
 
 echo "Removing the current contrib version of Flowdrop UI Agents..."
-# We use ddev to make it consistent across environments.
 ddev exec "rm -rf web/modules/contrib/flowdrop_ui_agents"
 
 echo "Setting up symlinks for Flowdrop modules..."
-ddev exec "ln -s /var/www/html/modules/flowdrop_ui_agents web/modules/contrib/flowdrop_ui_agents"
+ddev exec "ln -sf /var/www/html/modules/flowdrop_ui_agents web/modules/contrib/flowdrop_ui_agents"
+
+echo "Applying AI recipe..."
+ddev exec 'if [ -n "$OPENAI_API_KEY" ]; then
+  echo "Using OPENAI_API_KEY from environment..."
+  drush recipe ../recipes/drupal_cms_ai --input=drupal_cms_ai.provider=openai --input=drupal_cms_ai.openai_api_key="$OPENAI_API_KEY"
+else
+  echo "No OPENAI_API_KEY found. You will be prompted for an API key..."
+  drush recipe ../recipes/drupal_cms_ai
+fi'
+
+echo "Enabling AI explorer and logging modules..."
+ddev drush en -y ai_agents_explorer ai_api_explorer ai_logging ai_observability
+
+echo "Enabling AI logging (requests and responses)..."
+ddev drush cset -y ai_logging.settings prompt_logging true
+ddev drush cset -y ai_logging.settings prompt_logging_output true
+
+echo "Clearing cache..."
+ddev drush cr
+
+echo "Done! FlowDrop dev environment is ready."
