@@ -10,4 +10,5 @@ composer require 'drupal/flowdrop:1.x-dev@dev'
 composer require 'drupal/flowdrop_ui_agents:1.0.x-dev@dev'
 
 # We need to build flowdrop ui.
-cd web/modules/contrib/flowdrop/modules/flowdrop_ui/app/flowdrop && npm install && npm run build && cd ../../../../../../..
+cd web/modules/contrib/flowdrop/modules/flowdrop_ui/app/flowdrop && npm install && npm run build:iife
+cd $APP_ROOT
