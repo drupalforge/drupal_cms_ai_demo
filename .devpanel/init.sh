@@ -38,6 +38,7 @@ if [ -f composer.json ]; then
 else
   echo 'Generate composer.json.'
   time source .devpanel/composer_setup.sh
+  time source .devpanel/composer_extra.sh
   echo
 fi
 time composer -n update --no-dev --no-progress
@@ -109,6 +110,9 @@ else
   echo 'Update database.'
   time drush -n updb
 fi
+
+#== Install Flowdrop modules.
+drush -y pm:en flowdrop_ui flowdrop_ui_agents
 
 #== Warm up caches.
 echo
