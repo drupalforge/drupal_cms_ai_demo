@@ -27,12 +27,21 @@ else
   drush recipe ../recipes/drupal_cms_ai
 fi'
 
+echo "Enabling Tool module and submodules..."
+ddev drush en -y tool tool_ai_connector tool_content tool_content_translation tool_entity tool_system tool_explorer tool_user
+
 echo "Enabling AI explorer and logging modules..."
 ddev drush en -y ai_agents_explorer ai_api_explorer ai_logging ai_observability
 
 echo "Enabling AI logging (requests and responses)..."
-ddev drush cset -y ai_logging.settings prompt_logging true
-ddev drush cset -y ai_logging.settings prompt_logging_output true
+ddev drush cset -y ai_logging.settings prompt_logging 1
+ddev drush cset -y ai_logging.settings prompt_logging_output 1
+
+echo "Applying Bundle Lister Demo recipe..."
+ddev drush recipe ../recipes/bundle_lister_demo
+
+echo "Disabling Klaro consent for DeepChat chatbot..."
+ddev drush cset -y klaro.klaro_app.deepchat status 0
 
 echo "Clearing cache..."
 ddev drush cr

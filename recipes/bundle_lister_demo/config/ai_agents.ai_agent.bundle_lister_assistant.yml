@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies: {  }
+id: bundle_lister_assistant
+label: 'Bundle Lister Assistant'
+description: ''
+system_prompt: 'Help the User and tell them about the Bundles on entities like node'
+secured_system_prompt: null
+tools:
+  'ai_agents::ai_agent::bundle_lister_agent': true
+tool_settings: null
+orchestration_agent: true
+triage_agent: false
+max_loops: 3
+default_information_tools: null
+tool_usage_limits: {  }
+exclude_users_role: false
+masquerade_roles: {  }
+structured_output_enabled: null
+structured_output_schema: null

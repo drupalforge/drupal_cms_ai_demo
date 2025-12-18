@@ -1,0 +1,20 @@
+name: 'Bundle Lister Demo'
+description: 'Demo recipe that creates a Bundle Lister AI Agent, Assistant, and DeepChat chatbot.'
+type: 'AI Demo'
+
+install:
+  - ai_agents
+  - ai_assistant_api
+  - ai_chatbot
+  - tool
+  - tool_entity
+
+config:
+  import:
+    ai_agents:
+      - ai_agents.ai_agent.bundle_lister_agent
+      - ai_agents.ai_agent.bundle_lister_assistant
+    ai_assistant_api:
+      - ai_assistant_api.ai_assistant.bundle_lister_assistant
+    block:
+      - block.block.bundle_lister_chatbot

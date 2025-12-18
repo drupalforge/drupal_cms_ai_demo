@@ -111,12 +111,23 @@ else
   time drush -n updb
 fi
 
+#== Install Tool module and submodules.
+drush -y pm:en tool tool_ai_connector tool_content tool_content_translation tool_entity tool_system tool_explorer tool_user
+
 #== Install Flowdrop modules and AI explorer/logging tools.
 drush -y pm:en flowdrop_ui flowdrop_ui_agents ai_provider_openai ai_agents_explorer ai_api_explorer ai_logging ai_observability
 
 #== Enable AI logging (requests and responses).
-drush -n cset ai_logging.settings prompt_logging true
-drush -n cset ai_logging.settings prompt_logging_output true
+drush -n cset ai_logging.settings prompt_logging 1
+drush -n cset ai_logging.settings prompt_logging_output 1
+
+#== Apply Bundle Lister Demo recipe.
+echo
+echo 'Apply Bundle Lister Demo recipe.'
+time drush -q recipe ../recipes/bundle_lister_demo
+
+#== Disable Klaro consent for DeepChat chatbot.
+drush -n cset klaro.klaro_app.deepchat status 0
 
 #== Warm up caches.
 echo

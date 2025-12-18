@@ -1,0 +1,31 @@
+langcode: en
+status: true
+dependencies: {  }
+id: bundle_lister_agent
+label: 'Bundle Lister Agent'
+description: 'Lists Bundles for an entity like node'
+system_prompt: 'List the Bundles of a node with the tool available or help the user. Can also do bundles for others but favour node'
+secured_system_prompt: '[ai_agent:agent_instructions]'
+tools:
+  'tool:entity_bundle_list': true
+tool_settings:
+  'tool:entity_bundle_list':
+    return_directly: 0
+    require_usage: 0
+    description_override: ''
+    progress_message: ''
+    use_artifacts: 0
+orchestration_agent: false
+triage_agent: false
+max_loops: 3
+default_information_tools: ''
+tool_usage_limits:
+  'tool:entity_bundle_list':
+    entity_type_id:
+      action: ''
+      hide_property: 0
+      values: ''
+exclude_users_role: false
+masquerade_roles: {  }
+structured_output_enabled: false
+structured_output_schema: ''

@@ -1,0 +1,37 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - ai_chatbot
+  theme:
+    - drupal_cms_olivero
+id: bundle_lister_chatbot
+theme: drupal_cms_olivero
+region: footer_bottom
+weight: 0
+provider: null
+plugin: ai_deepchat_block
+settings:
+  id: ai_deepchat_block
+  label: 'Bundle Lister Chatbot'
+  label_display: '0'
+  provider: ai_chatbot
+  ai_assistant: bundle_lister_assistant
+  bot_name: 'Bundle Lister'
+  bot_image: /modules/contrib/ai/modules/ai_chatbot/assets/ai-star-avatar.svg
+  use_username: 0
+  default_username: ''
+  use_avatar: 0
+  default_avatar: ''
+  first_message: 'I can tell you about the bundles on an entity like Node'
+  stream: null
+  toggle_state: remember
+  width: 500px
+  height: 500px
+  placement: bottom-right
+  show_structured_results: false
+  show_copy_icon: true
+  collapse_minimal: false
+  style_file: 'module:ai_chatbot:bard.yml'
+  verbose_mode: true
+visibility: {  }
