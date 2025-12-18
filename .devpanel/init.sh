@@ -112,7 +112,7 @@ else
 fi
 
 #== Install Flowdrop modules.
-drush -y pm:en flowdrop_ui flowdrop_ui_agents
+drush -y pm:en flowdrop_ui flowdrop_ui_agents ai_provider_openai
 
 #== Warm up caches.
 echo

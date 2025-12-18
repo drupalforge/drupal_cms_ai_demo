@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+## Description: Sets up flowdrop dev environment
+## Usage: setup-flowdrop-dev
+## Example: "ddev setup-flowdrop-dev"
+## ExecRaw: true
+
+echo "Cloning the Flowdrop UI Agents module from the Flowdrop repository..."
+cd modules && git clone git@git.drupal.org:project/flowdrop_ui_agents.git
+
+echo "Removing the current contrib version of Flowdrop UI Agents..."
+# We use ddev to make it consistent across environments.
+ddev exec "rm -rf web/modules/contrib/flowdrop_ui_agents"
+
+echo "Setting up symlinks for Flowdrop modules..."
+ddev exec "ln -s /var/www/html/modules/flowdrop_ui_agents web/modules/contrib/flowdrop_ui_agents"

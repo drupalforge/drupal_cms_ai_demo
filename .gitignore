@@ -13,3 +13,5 @@
 /recipes/
 /vendor/
 /web/
+modules/*
+!modules/.gitkeep
