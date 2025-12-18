@@ -1,4 +1,4 @@
-name: Docker build and push template
+name: Docker build and push for Drupal Forge applications
 on:
   push:
     branches:
