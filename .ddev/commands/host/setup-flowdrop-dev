@@ -33,12 +33,21 @@ ddev drush en -y tool tool_ai_connector tool_content tool_content_translation to
 echo "Enabling AI explorer and logging modules..."
 ddev drush en -y ai_agents_explorer ai_api_explorer ai_logging ai_observability
 
+echo "Enabling FlowDrop core modules..."
+ddev drush en -y flowdrop flowdrop_ui flowdrop_runtime flowdrop_pipeline flowdrop_workflow
+
+echo "Enabling FlowDrop AI integration..."
+ddev drush en -y flowdrop_ai flowdrop_ui_agents
+
 echo "Enabling AI logging (requests and responses)..."
 ddev drush cset -y ai_logging.settings prompt_logging 1
 ddev drush cset -y ai_logging.settings prompt_logging_output 1
 
 echo "Applying Bundle Lister Demo recipe..."
 ddev drush recipe ../recipes/bundle_lister_demo
+
+echo "Applying Alt Text Evaluator Demo recipe..."
+ddev drush recipe ../recipes/alt_text_evaluator_demo
 
 echo "Disabling Klaro consent for DeepChat chatbot..."
 ddev drush cset -y klaro.klaro_app.deepchat status 0

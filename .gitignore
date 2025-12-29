@@ -15,6 +15,7 @@
 /README.md
 /recipes/
 !/recipes/bundle_lister_demo/
+!/recipes/alt_text_evaluator_demo/
 /vendor/
 /web/
 modules/*
