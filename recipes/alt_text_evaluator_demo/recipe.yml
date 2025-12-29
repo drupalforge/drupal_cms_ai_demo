@@ -1,0 +1,66 @@
+name: 'Alt Text Evaluator Demo'
+description: 'Demo recipe that creates an Alt Text Evaluator AI Agent using Flowdrop UI, an Assistant, and DeepChat chatbot.'
+type: 'AI Demo'
+
+install:
+  - ai_agents
+  - tool
+  - tool_entity
+  - workflows
+  - content_moderation
+
+config:
+  # Be strict about field storages since they influence database layout
+  strict:
+    - field.storage.media.field_alt_text_score
+    - field.storage.media.field_ai_evaluation_explanation
+  import:
+    ai_agents:
+      - ai_agents.ai_agent.evaluation_agent
+    field:
+      - field.storage.media.field_alt_text_score
+      - field.field.media.image.field_alt_text_score
+      - field.storage.media.field_ai_evaluation_explanation
+      - field.field.media.image.field_ai_evaluation_explanation
+    workflows:
+      - workflows.workflow.editorial
+  actions:
+    core.entity_form_display.media.image.*:
+      setComponents:
+        -
+          name: field_alt_text_score
+          options:
+            type: number
+            weight: 102
+            region: content
+            settings:
+              placeholder: ''
+        -
+          name: field_ai_evaluation_explanation
+          options:
+            type: string_textarea
+            weight: 101
+            region: content
+            settings:
+              rows: 5
+              placeholder: ''
+    core.entity_view_display.media.image.*:
+      setComponents:
+        -
+          name: field_alt_text_score
+          options:
+            type: number_integer
+            label: above
+            weight: 2
+            region: content
+            settings:
+              thousand_separator: ''
+              prefix_suffix: true
+        -
+          name: field_ai_evaluation_explanation
+          options:
+            type: basic_string
+            label: above
+            weight: 1
+            region: content
+            settings: {}

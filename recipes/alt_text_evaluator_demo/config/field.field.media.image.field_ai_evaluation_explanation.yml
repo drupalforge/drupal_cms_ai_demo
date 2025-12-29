@@ -1,0 +1,19 @@
+uuid: cde24c22-0f22-4da0-bf83-d21ff6a9bd58
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_ai_evaluation_explanation
+    - media.type.image
+id: media.image.field_ai_evaluation_explanation
+field_name: field_ai_evaluation_explanation
+entity_type: media
+bundle: image
+label: 'AI Evaluation Explanation'
+description: 'AI-generated evaluation explaining the quality score. Includes description of what the image actually shows, comparison with the existing alt text, and specific recommendations for improvement if needed.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

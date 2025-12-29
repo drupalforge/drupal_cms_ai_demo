@@ -13,7 +13,7 @@
 /patches.lock.json
 /private/
 /README.md
-/recipes/
+/recipes/*
 !/recipes/bundle_lister_demo/
 !/recipes/alt_text_evaluator_demo/
 /vendor/
