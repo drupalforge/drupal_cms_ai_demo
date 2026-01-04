@@ -2,7 +2,16 @@
 
 - **Issue**: [#3564034](https://www.drupal.org/project/flowdrop_ui_agents/issues/3564034)
 - **Branch**: `3564034-general-improvements-to`
-- **Status**: In Progress (uncommitted changes)
+- **Status**: In Progress
+
+## Issue Text
+
+> We need to make the Tool Drawer use the same Categories as the Select Tools Widget
+> When you drag a tool on top of an Agent, it should automatically attach it and put it in a nice reasonable location relative to the others
+> The tools when you load them first time all overlap a little and so need more spacing
+> We need to add RAG search tools and see how they work (Should link you to the indexes)
+> We need to make the forms in the editing a node have similar order and priorities as they do in the form (So advanced features can be hidden)
+> We need to improve the Config on a tool. incude the ability to force values
 
 ## Problem Summary
 
