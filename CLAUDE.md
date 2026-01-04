@@ -150,6 +150,25 @@ This demo showcases the integration of several AI and FlowDrop modules:
 - **ai_logging**: Request/response logging for debugging
 - **ai_observability**: Performance metrics for AI operations
 
+### Common Pitfalls
+
+#### FlowDrop JavaScript Build Files
+
+FlowDrop ships TWO JavaScript builds in `web/modules/contrib/flowdrop/modules/flowdrop_ui/build/flowdrop/`:
+
+| File | Format | Used By |
+|------|--------|---------|
+| `flowdrop.es.js` | ES Modules (`import`/`export`) | Bundlers (Vite, Webpack) |
+| `flowdrop.iife.js` | IIFE (browser-compatible) | **Drupal** |
+
+**CRITICAL**: Drupal's library system uses traditional `<script>` tags, NOT ES modules. When patching FlowDrop JavaScript, **always patch `flowdrop.iife.js`**, not `.es.js`.
+
+To verify which file is loaded, check browser DevTools Network tab for `flowdrop.iife.js`.
+
+#### FlowDrop Sidebar Data Source
+
+The FlowDrop sidebar fetches nodes from `/api/flowdrop-agents/nodes` (flat list), NOT `/api/flowdrop-agents/nodes/by-category`. If you need data on each node for sidebar rendering (like `categoryWeight` for sorting), add it to `NodesController::getNodes()`.
+
 ## Recipes System
 
 Drupal CMS uses a "recipe" system for installing pre-configured functionality. Recipes define modules to install, configuration to import, and content to create.

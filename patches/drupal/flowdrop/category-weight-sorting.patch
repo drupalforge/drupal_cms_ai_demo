@@ -1,0 +1,26 @@
+diff --git a/modules/flowdrop_ui/build/flowdrop/flowdrop.es.js b/modules/flowdrop_ui/build/flowdrop/flowdrop.es.js
+--- a/modules/flowdrop_ui/build/flowdrop/flowdrop.es.js
++++ b/modules/flowdrop_ui/build/flowdrop/flowdrop.es.js
+@@ -23209,8 +23209,14 @@ function NodeSidebar($$anchor, $$props) {
+   function getCategories() {
+     const nodes = $$props.nodes || [];
+     if (nodes.length === 0) return [];
++    const categoryWeights = new Map();
+     const categories2 = new SvelteSet();
+-    nodes.forEach((node) => categories2.add(node.category));
+-    return Array.from(categories2).sort();
++    nodes.forEach((node) => {
++      categories2.add(node.category);
++      if (!categoryWeights.has(node.category) && node.categoryWeight !== undefined) {
++        categoryWeights.set(node.category, node.categoryWeight);
++      }
++    });
++    return Array.from(categories2).sort((a, b) => { const weightA = categoryWeights.get(a) ?? 0; const weightB = categoryWeights.get(b) ?? 0; if (weightA !== weightB) return weightA - weightB; return a.localeCompare(b); });
+   }
+
+diff --git a/modules/flowdrop_ui/build/flowdrop/flowdrop.iife.js b/modules/flowdrop_ui/build/flowdrop/flowdrop.iife.js
+--- a/modules/flowdrop_ui/build/flowdrop/flowdrop.iife.js
++++ b/modules/flowdrop_ui/build/flowdrop/flowdrop.iife.js
+@@ -1 +1 @@
+-e.forEach(e=>n.add(e.category)),Array.from(n).sort()
++const w=new Map();e.forEach(e=>{n.add(e.category);void 0!==e.categoryWeight&&!w.has(e.category)&&w.set(e.category,e.categoryWeight)}),Array.from(n).sort((a,b)=>{const x=w.get(a)??0,y=w.get(b)??0;return x!==y?x-y:a.localeCompare(b)})
