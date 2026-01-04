@@ -15,12 +15,12 @@ Per-branch tracking for the current work session.
 
 ## Current Focus
 
-**Sidebar Component Display Issues** - Fix "Agent_tools" label and restore green icon/color styling for agents in sidebar.
+**Issue #3564034 - General Improvements**: Sidebar categories, tool spacing, auto-attach, config panel ordering, force values.
 
 ## Test URLs
 
-- **Assistant Editor**: `/admin/config/ai/ai-assistant/drupal_cms_assistant/edit-flowdrop`
-- **API Endpoint**: `/api/flowdrop-agents/nodes/by-category`
+- **Assistant Editor**: `/admin/config/ai/ai-assistant/bundle_lister_assistant/edit-flowdrop`
+- **API Endpoint**: `/api/flowdrop-agents/nodes`
 
 ## Quick Commands
 
@@ -40,15 +40,17 @@ ddev drush cr
 
 ## Session Notes
 
-### 2025-01-03
-- Switched to issue #3564034 (sidebar improvements)
-- Issues: "Agent_tools" label, green styling regression
+### 2025-01-04
 
-### 2024-12-18
-- Set up new Claude documentation structure
-- Created plan for issue #3563756
-- Completed: Fix multi-agent save
+**Status**: Implementation complete, preparing for submission.
+
+**Remaining work** (see plan file):
+1. Fix `isToolNode()` bug (returns `|| true`)
+2. Fix event listener cleanup in detach()
+3. Add `.DS_Store` to gitignore
+4. Add kernel tests
+5. Update README
 
 ---
 
-*Last updated: 2025-01-03*
+*Last updated: 2025-01-04*
