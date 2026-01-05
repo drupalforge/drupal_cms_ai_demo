@@ -1,6 +1,15 @@
 # Plans Directory
 
-This directory contains implementation plans linked to specific issues.
+Implementation plans linked to specific issues in the module repository.
+
+## Folder Structure
+
+```
+plans/
+├── current/     # Active work - one plan per branch being worked on
+├── future/      # Planned work not yet started
+└── archived/    # Completed or abandoned work
+```
 
 ## Naming Convention
 
@@ -19,7 +28,7 @@ Plans are named to match the branch name in the module repo:
 
 ### Examples
 
-- `do-3512345-add-deepchat-node.md` - Matches branch `3512345-add-deepchat-node`
+- `do-3565644-bring-chatbots-into.md` - Matches branch `3565644-bring-chatbots-into`
 - `gh-42-update-demo-config.md` - GitHub issue #42
 
 ### Finding the Issue Number
@@ -29,8 +38,8 @@ The drupal.org branch name format is `{issue-number}-{description}`:
 ```bash
 cd modules/flowdrop_ui_agents
 git branch --show-current
-# Output: 3512345-add-deepchat-node
-# Issue: https://www.drupal.org/project/flowdrop_ui_agents/issues/3512345
+# Output: 3565644-bring-chatbots-into
+# Issue: https://www.drupal.org/project/flowdrop_ui_agents/issues/3565644
 ```
 
 ## Plan Template
@@ -61,6 +70,9 @@ Keep all technical discoveries here rather than in separate files.
 Any blockers or questions that need resolution.
 ```
 
-## Active Plans
+## Workflow
 
-- `do-3563756-support-multi-agents-and.md` - Multi-agent save fix and polish
+1. **Starting work**: Create plan in `current/`, switch to branch in module
+2. **During work**: Update plan with technical notes and task progress
+3. **Completing work**: Move plan to `archived/` after MR is merged
+4. **Future ideas**: Add plans to `future/` for work not yet started
