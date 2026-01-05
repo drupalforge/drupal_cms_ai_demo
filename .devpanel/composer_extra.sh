@@ -9,3 +9,4 @@ composer config minimum-stability dev
 composer require 'drupal/flowdrop:1.x-dev@dev'
 composer require 'drupal/flowdrop_ui_agents:1.0.x-dev@dev'
 composer require 'drupal/ai_provider_openai:^1.2'
+composer require 'drupal/tool:^1.0@alpha'
