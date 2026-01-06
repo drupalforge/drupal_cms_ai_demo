@@ -18,6 +18,9 @@ ddev exec "rm -rf web/modules/contrib/flowdrop_ui_agents"
 echo "Setting up symlinks for Flowdrop modules..."
 ddev exec "ln -sf /var/www/html/modules/flowdrop_ui_agents web/modules/contrib/flowdrop_ui_agents"
 
+echo "Setting up symlinks for custom modules..."
+ddev exec "mkdir -p web/modules/custom && ln -sf /var/www/html/modules/alt_text_tools web/modules/custom/alt_text_tools"
+
 echo "Applying AI recipe..."
 ddev exec 'if [ -n "$OPENAI_API_KEY" ]; then
   echo "Using OPENAI_API_KEY from environment..."
@@ -27,22 +30,7 @@ else
   drush recipe ../recipes/drupal_cms_ai
 fi'
 
-echo "Enabling Tool module and submodules..."
-ddev drush en -y tool tool_ai_connector tool_content tool_content_translation tool_entity tool_system tool_explorer tool_user
-
-echo "Enabling AI explorer and logging modules..."
-ddev drush en -y ai_agents_explorer ai_api_explorer ai_logging ai_observability
-
-echo "Enabling AI logging (requests and responses)..."
-ddev drush cset -y ai_logging.settings prompt_logging 1
-ddev drush cset -y ai_logging.settings prompt_logging_output 1
-
-echo "Applying Bundle Lister Demo recipe..."
-ddev drush recipe ../recipes/bundle_lister_demo
-
-echo "Disabling Klaro consent for DeepChat chatbot..."
-ddev drush cset -y klaro.klaro_app.deepchat status 0
-
+echo "Note: Module installation, demo recipes, and configuration are handled by .devpanel/init.sh"
 echo "Clearing cache..."
 ddev drush cr
 

@@ -12,6 +12,8 @@ hooks:
     post-start:
         # Set up debugging.
         - exec: test -f .vscode/launch.json || mkdir -p .vscode && cp .ddev/launch.json .vscode/
+        # Remove nested .ddev directories from contrib modules
+        - exec: rm -rf web/modules/contrib/*/.ddev || true
         # Run initial setup tasks.
         - exec: .devpanel/init.sh && drush cr
 use_dns_when_possible: true

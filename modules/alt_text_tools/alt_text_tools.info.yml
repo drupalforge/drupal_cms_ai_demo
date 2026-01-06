@@ -1,0 +1,13 @@
+name: 'Alt Text Tools'
+type: module
+description: 'Provides specialized tools for AI-powered alt text evaluation, including vision analysis and media moderation save capabilities.'
+package: 'AI'
+core_version_requirement: ^10 || ^11
+dependencies:
+  - drupal:media
+  - drupal:file
+  - tool:tool
+  - tool:tool_content
+  - ai:ai
+  - ai_agents:ai_agents
+  - content_moderation:content_moderation

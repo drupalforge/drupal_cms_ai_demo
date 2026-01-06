@@ -2,9 +2,16 @@
     "patches": {
         "drupal/core": {
             "#3531174: Add configuration for additional known files in project root": "https://git.drupalcode.org/project/drupal/-/merge_requests/12432.patch"
+        },
+        "drupal/tool": {
+            "#3563382: EntityFieldValues tool doesn't return image field metadata (alt, title, width, height)": "https://git.drupalcode.org/project/tool/-/merge_requests/65.patch",
+            "#3563835: EntityFieldValueDefinitions tool fails with \"Missing bundle\" error for media and comment entities": "https://git.drupalcode.org/project/tool/-/merge_requests/66.patch"
+        },
+        "drupal/field_validation": {
+            "#3524477: Breaking errors in D11.2 or D11.x": "https://www.drupal.org/files/issues/2025-06-17/field_validation-issue-3524477-mr-15.patch"
+        },
+        "drupal/flowdrop": {
+            "Fix PipelineExecutionWorker dependency injection (TypeError during cron)": "./patches/drupal/flowdrop/pipeline-worker-dependency-injection.patch"
         }
-    },
-    "drupal/field_validation": {
-        "#3524477: Breaking errors in D11.2 or D11.x": "https://www.drupal.org/files/issues/2025-06-17/field_validation-issue-3524477-mr-15.patch"
     }
 }

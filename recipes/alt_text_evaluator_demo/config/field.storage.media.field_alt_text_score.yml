@@ -1,0 +1,20 @@
+uuid: b08959db-9fcb-4591-bf95-5901620f09e7
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.field_alt_text_score
+field_name: field_alt_text_score
+entity_type: media
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

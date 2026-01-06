@@ -1,0 +1,23 @@
+uuid: 88c7a2d3-9e80-4c15-940e-89b2489a7387
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_alt_text_score
+    - media.type.image
+id: media.image.field_alt_text_score
+field_name: field_alt_text_score
+entity_type: media
+bundle: image
+label: 'Alt Text Quality Score'
+description: 'Quality score (0-10) rating how well the alt text matches the actual image content. Higher scores indicate more accurate descriptions.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

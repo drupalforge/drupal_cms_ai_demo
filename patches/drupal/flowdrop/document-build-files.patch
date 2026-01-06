@@ -1,0 +1,34 @@
+diff --git a/README.md b/README.md
+--- a/README.md
++++ b/README.md
+@@ -161,6 +161,30 @@ npm run dev          # Development server
+ npm run build:iife   # Build for Drupal integration
+ npm run test         # Run tests
+ ```
++
++### JavaScript Build Files
++
++The build process generates two JavaScript bundles in `modules/flowdrop_ui/build/flowdrop/`:
++
++| File | Format | Used By |
++|------|--------|---------|
++| `flowdrop.iife.js` | IIFE (Immediately Invoked Function Expression) | **Drupal** - loaded via library system |
++| `flowdrop.es.js` | ES Modules (`import`/`export`) | Bundler-based projects (Vite, Webpack) |
++
++#### Which File Does Drupal Use?
++
++Drupal's asset system uses traditional `<script>` tags, not ES modules. Therefore,
++**Drupal loads `flowdrop.iife.js`**.
++
++#### Patching FlowDrop in Drupal
++
++If you need to patch FlowDrop behavior for a Drupal site:
++
++1. Patch `flowdrop.iife.js` (not `.es.js`)
++2. Clear Drupal caches: `drush cr`
++3. Hard refresh browser to bypass JS cache
++
++To verify which file is loaded, check browser DevTools → Network tab → filter by "flowdrop".
+ 
+ ## 📚 API Documentation
+ 
