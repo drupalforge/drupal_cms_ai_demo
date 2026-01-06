@@ -30,9 +30,13 @@ time sudo rm -rf lost+found
 #== Composer install.
 echo
 if [ -f composer.json ]; then
+  echo 'Run composer update.'
+  time composer -n update --no-dev --no-progress
+  echo
+  # Update patches.lock.json if composer-patches v2 is installed
   if composer show --locked cweagans/composer-patches ^2 &> /dev/null; then
     echo 'Update patches.lock.json.'
-    time composer prl
+    time composer prl || echo "Note: patches-relock command not available, skipping."
     echo
   fi
 else
@@ -40,8 +44,8 @@ else
   time source .devpanel/composer_setup.sh
   time source .devpanel/composer_extra.sh
   echo
+  time composer -n update --no-dev --no-progress
 fi
-time composer -n update --no-dev --no-progress
 
 #== Create the private files directory.
 if [ ! -d private ]; then
@@ -112,10 +116,29 @@ else
 fi
 
 #== Install Tool module and submodules.
+echo
+echo 'Install Tool modules.'
 drush -y pm:en tool tool_ai_connector tool_content tool_content_translation tool_entity tool_system tool_explorer tool_user
 
-#== Install Flowdrop modules and AI explorer/logging tools.
-drush -y pm:en flowdrop flowdrop_ui flowdrop_runtime flowdrop_pipeline flowdrop_workflow flowdrop_ai flowdrop_ui_agents ai_provider_openai ai_agents_explorer ai_api_explorer ai_logging ai_observability
+#== Install AI provider modules.
+echo
+echo 'Install AI provider modules.'
+drush -y pm:en ai_provider_openai
+
+#== Install AI explorer and logging tools.
+echo
+echo 'Install AI explorer and logging tools.'
+drush -y pm:en ai_agents_explorer ai_api_explorer ai_logging ai_observability
+
+#== Install core Flowdrop modules.
+echo
+echo 'Install core Flowdrop modules.'
+drush -y pm:en flowdrop flowdrop_ui flowdrop_runtime flowdrop_pipeline flowdrop_workflow
+
+#== Install Flowdrop UI Agents.
+echo
+echo 'Install Flowdrop UI Agents.'
+drush -y pm:en flowdrop_ui_agents
 
 #== Enable AI logging (requests and responses).
 drush -n cset ai_logging.settings prompt_logging 1

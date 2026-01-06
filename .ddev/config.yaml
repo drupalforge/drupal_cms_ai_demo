@@ -13,8 +13,7 @@ hooks:
         # Set up debugging.
         - exec: test -f .vscode/launch.json || mkdir -p .vscode && cp .ddev/launch.json .vscode/
         # Run initial setup tasks.
-        # NOTE: Commented out for local dev - use 'ddev setup-flowdrop-dev' instead
-        # - exec: .devpanel/init.sh && drush cr
+        - exec: .devpanel/init.sh && drush cr
 use_dns_when_possible: true
 composer_version: "2"
 web_environment:
