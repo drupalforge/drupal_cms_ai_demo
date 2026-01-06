@@ -9,6 +9,9 @@
         },
         "drupal/field_validation": {
             "#3524477: Breaking errors in D11.2 or D11.x": "https://www.drupal.org/files/issues/2025-06-17/field_validation-issue-3524477-mr-15.patch"
+        },
+        "drupal/flowdrop": {
+            "Fix PipelineExecutionWorker dependency injection (TypeError during cron)": "./patches/drupal/flowdrop/pipeline-worker-dependency-injection.patch"
         }
     }
 }
