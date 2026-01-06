@@ -154,6 +154,11 @@ echo
 echo 'Apply Alt Text Evaluator Demo recipe.'
 time drush -q recipe ../recipes/alt_text_evaluator_demo
 
+#== Install the agent creation agent.
+echo
+echo 'Install the agent creation agent.'
+time drush -n en ai_agent_agent
+
 #== Disable Klaro consent for DeepChat chatbot.
 drush -n cset klaro.klaro_app.deepchat status 0
 
