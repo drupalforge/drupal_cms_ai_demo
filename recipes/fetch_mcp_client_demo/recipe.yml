@@ -1,0 +1,6 @@
+name: 'Fetch MCP Client Demo'
+description: 'Demo to setup the MCP Client module and use the open fetch MCP server.'
+type: 'AI Demo'
+
+install:
+  - mcp_client

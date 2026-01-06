@@ -14,8 +14,8 @@
 /private/
 /README.md
 /recipes/*
-!/recipes/bundle_lister_demo/
 !/recipes/alt_text_evaluator_demo/
+!/recipes/bundle_lister_demo/
 !/recipes/fetch_mcp_client_demo/
 /vendor/
 /web/
