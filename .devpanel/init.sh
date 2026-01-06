@@ -170,6 +170,11 @@ echo
 echo 'Install Flowdrop UI Agents.'
 drush -y pm:en flowdrop_ui_agents
 
+#== Install Alt Text Tools.
+echo
+echo 'Install Alt Text Tools.'
+drush -y pm:en alt_text_tools
+
 #== Enable AI logging (requests and responses).
 drush -n cset ai_logging.settings prompt_logging 1
 drush -n cset ai_logging.settings prompt_logging_output 1
