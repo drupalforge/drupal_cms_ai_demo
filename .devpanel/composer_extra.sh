@@ -12,4 +12,7 @@ composer require 'drupal/ai_provider_openai:^1.2'
 composer require 'drupal/tool:^1.0@alpha'
 
 # Get the agent creation agent
-composer require 'drupal/ai_agent_agent:1.0-dev@dev'
+composer require 'drupal/ai_agent_agent:1.0.x-dev@dev'
+
+# Get the MCP Client
+composer require 'drupal/mcp_client:^1.0@alpha' -W

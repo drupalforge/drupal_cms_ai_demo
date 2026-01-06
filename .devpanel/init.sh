@@ -159,6 +159,11 @@ echo
 echo 'Install the agent creation agent.'
 time drush -n en ai_agent_agent
 
+#== Apply Fetch MCP Client Demo recipe.
+echo
+echo 'Apply Fetch MCP Client Demo recipe.'
+time drush -q recipe ../recipes/fetch_mcp_client_demo
+
 #== Disable Klaro consent for DeepChat chatbot.
 drush -n cset klaro.klaro_app.deepchat status 0
 
