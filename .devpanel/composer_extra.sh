@@ -12,4 +12,4 @@ composer require 'drupal/ai_provider_openai:^1.2'
 composer require 'drupal/tool:^1.0@alpha'
 
 # Get the agent creation agent
-composer require 'drupal/ai_agent_agent:1.0-dev@dev'
+composer require 'drupal/ai_agent_agent:dev-1.0.x'
