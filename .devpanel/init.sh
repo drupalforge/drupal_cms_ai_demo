@@ -68,6 +68,36 @@ if [ ! -f .devpanel/salt.txt ]; then
   time openssl rand -hex 32 > .devpanel/salt.txt
 fi
 
+#== Handle modules in /modules directory.
+echo
+echo 'Set up custom modules from /modules directory.'
+# Check if we're in DDEV environment
+if [ -n "${DDEV_HOSTNAME:-}" ]; then
+  echo 'DDEV detected: Creating symlinks for custom modules.'
+  mkdir -p web/modules/custom
+  for module_dir in modules/*; do
+    if [ -d "$module_dir" ] && [ "$(basename "$module_dir")" != "flowdrop_ui_agents" ]; then
+      module_name=$(basename "$module_dir")
+      if [ ! -e "web/modules/custom/$module_name" ]; then
+        echo "  Symlinking $module_name..."
+        ln -sf "/var/www/html/$module_dir" "web/modules/custom/$module_name"
+      fi
+    fi
+  done
+else
+  echo 'Production environment detected: Copying custom modules.'
+  mkdir -p web/modules/custom
+  for module_dir in modules/*; do
+    if [ -d "$module_dir" ] && [ "$(basename "$module_dir")" != "flowdrop_ui_agents" ]; then
+      module_name=$(basename "$module_dir")
+      if [ ! -e "web/modules/custom/$module_name" ]; then
+        echo "  Copying $module_name..."
+        cp -r "$module_dir" "web/modules/custom/$module_name"
+      fi
+    fi
+  done
+fi
+
 #== Install Drupal.
 echo
 if [ -z "$(drush status --field=db-status)" ]; then
@@ -139,6 +169,11 @@ drush -y pm:en flowdrop flowdrop_ui flowdrop_runtime flowdrop_pipeline flowdrop_
 echo
 echo 'Install Flowdrop UI Agents.'
 drush -y pm:en flowdrop_ui_agents
+
+#== Install Alt Text Tools.
+echo
+echo 'Install Alt Text Tools.'
+drush -y pm:en alt_text_tools
 
 #== Enable AI logging (requests and responses).
 drush -n cset ai_logging.settings prompt_logging 1
