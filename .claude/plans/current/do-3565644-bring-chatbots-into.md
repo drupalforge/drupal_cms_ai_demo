@@ -331,6 +331,66 @@ All features implemented and tested:
 - `.claude/screenshots/chatbot-node-styling.png` - Shows chatbot node with purple styling
 - `.claude/screenshots/chatbot-save-success.png` - Shows save success notification
 
+### Session 2026-01-07
+
+**Chatbot Node Styling Overhaul**
+
+Completely redesigned chatbot nodes to match tool node visual style:
+
+**Changes**:
+- Fixed width at 288px (matches tool nodes)
+- Light purple background (#f3e8ff) with purple border (#a855f7)
+- Compact card layout with proper header, icon, and title styling
+- Connection handle (purple dot) centered vertically on right edge
+- "CHAT" badge positioned top-right corner (-8px, -5px)
+- Config cog with hover fade effect (z-index: 200)
+- Ports container hidden but handles remain visible
+- Custom body text: "Chat Message Input on Gin theme in Content Region."
+
+**Technical approach**:
+- FlowDrop uses Svelte Flow which aggressively overwrites CSS
+- JS enforcement via `setProperty('important')` required for handles
+- Badge injection uses container fallback chain: `.universal-node` → `.flowdrop-workflow-node.parentNode` → `:scope > div`
+- 500ms interval polls for dynamically added chatbot nodes
+
+**Commits**:
+- `d1f152c` - Overhaul chatbot node styling to match tool node design
+- `c45bf80` - Add z-index to config button and show on hover
+
+## Known Issues
+
+### Config Cog / CHAT Badge Overlap
+The config cog (gear icon) appears behind the CHAT badge when both are in the top-right corner. The badge has z-index: 101, config button has z-index: 200, but they're in different stacking contexts.
+
+**Status**: Will be addressed in a separate follow-up issue.
+
+**Potential solutions**:
+1. Move badge to different position (top-left)
+2. Make badge semi-transparent on hover
+3. Add `pointer-events: none` to badge on hover
+4. Move config cog to different position (bottom-right)
+
+## Code Review Notes
+
+### CSS (`css/flowdrop-agents-editor.css`)
+- Clean structure with proper comments explaining approach
+- Uses `!important` where necessary (Svelte Flow overrides styles)
+- BEM naming convention followed for custom classes
+- Some comments explain "why" not just "what" (e.g., position: static critical note)
+
+### JS (`js/flowdrop-agents-editor.js`)
+- Large file (~2200 lines) - consider splitting in future
+- Mixes `function()` and arrow function syntax (minor inconsistency)
+- Good separation of concerns (setupChatbotContent, enhanceConfigPanel, etc.)
+- Interval polling approach necessary due to Svelte Flow's dynamic rendering
+- Template strings contain CSS which duplicates external CSS file (unavoidable for dynamic injection)
+
+### PHP (`src/Service/AgentWorkflowMapper.php`)
+- PSR-12 brace placement inconsistency (some methods have `{` on new line, others same line)
+- Changed chatbot color from red to purple (`var(--color-ref-purple-500)`)
+- Clean PHPDoc comments with proper type hints
+- Code formatting changes (else/elseif on same line as closing brace)
+
 ## Reference Files
 
 | File | Purpose |
