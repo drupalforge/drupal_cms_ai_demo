@@ -2,7 +2,7 @@
 
 - **Issue**: [#3565644](https://www.drupal.org/project/flowdrop_ui_agents/issues/3565644)
 - **Branch**: `3565644-bring-chatbots-into`
-- **Status**: Planning
+- **Status**: Complete
 
 ## Goal
 
@@ -64,31 +64,38 @@ Add DeepChat chatbot nodes to the FlowDrop UI, allowing users to visually connec
 - [ ] Check existing chatbot block configs in demo site
 
 ### Phase 2: Node Definition
-- [ ] Create chatbot node type in `AgentWorkflowMapper`
-- [ ] Define ports: output `trigger` to connect to assistant's trigger input
-- [ ] Define config schema for chatbot settings (see below)
-- [ ] Add `getAvailableChatbots()` method to discover existing blocks
-- [ ] **Filter to only unassigned chatbots** (no `ai_assistant` set, or assistant doesn't exist)
-- [ ] Add chatbot nodes to `NodesController::getNodes()`
-- [ ] Register "Chatbots" category in sidebar (weight -90, below Agents)
+- [x] Create chatbot node type in `AgentWorkflowMapper` (for workflow load/save)
+- [x] Define ports: output `trigger` to connect to assistant's trigger input
+- [x] Define config schema for chatbot settings (`getChatbotConfigSchema()`)
+- [x] Add `getAvailableChatbots()` method to discover existing blocks
+- [x] **Filter to only unassigned chatbots** (no `ai_assistant` set)
+- [x] Add chatbot nodes to `NodesController::getNodes()`
+- [x] Add chatbot nodes to `NodesController::getNodesByCategory()`
+- [x] Register "Chatbots" category color in `AgentWorkflowMapper`
 
 ### Phase 3: Save Logic
-- [ ] Add chatbot handling to `AssistantSaveController`
-- [ ] Save chatbots AFTER assistant (they need assistant ID)
-- [ ] Create/update block.block.* config entities
-- [ ] Map FlowDrop node config → block config structure
-- [ ] Handle theme/region config with sensible defaults
+- [x] Add chatbot handling to `AssistantSaveController`
+- [x] Save chatbots AFTER assistant (they need assistant ID)
+- [x] Create/update block.block.* config entities
+- [x] Map FlowDrop node config → block config structure
+- [x] Handle theme/region config with sensible defaults
 
 ### Phase 4: Load Logic (Existing Workflows)
-- [ ] Detect chatbots linked to current assistant
-- [ ] Create chatbot nodes from block.block.* entities
-- [ ] Position chatbot nodes left of assistant (x offset)
-- [ ] Create edges from chatbot trigger → assistant trigger
+- [x] Detect chatbots linked to current assistant (`addLinkedChatbots()`)
+- [x] Create chatbot nodes from block.block.* entities
+- [x] Position chatbot nodes left of assistant (x offset -350)
+- [x] Create edges from chatbot trigger → assistant trigger
 
 ### Phase 5: UI Polish
-- [ ] Chatbot node styling (icon: `mdi:chat`, color: trigger red `#ef4444`)
-- [ ] Validation: warn if chatbot not connected
-- [ ] Error messaging for save failures
+- [x] Chatbot node styling (purple theme with gradient background)
+- [x] "CHAT" badge matching tool node "TOOL" badge style
+- [x] Config panel with collapsible sections (Placement, Messages, Styling, Advanced, Visibility)
+- [x] Visibility settings with custom UI (Pages, Response Status, Roles, Content Types, Vocabulary)
+- [x] Dynamic region dropdown based on selected theme
+- [x] Toggle switches for boolean fields
+- [x] Fix select dropdown labels (Theme, Style, Placement, Toggle State)
+- [x] Validation: warn if chatbot not connected
+- [x] Error messaging for save failures
 
 ## Technical Notes
 
@@ -254,6 +261,75 @@ foreach ($blocks as $block) {
 3. **Q**: Can we create blocks without placing them in a visible region? May need a "hidden" region or disabled status.
 4. **Q**: Should we support multiple chatbots per assistant in the UI? (Yes per requirements, but need UX thought)
 5. **Q**: How to handle block ID generation for new chatbots?
+
+## Implementation Notes
+
+### Completed Work (Jan 5, 2026)
+
+#### Chatbot Node Discovery & Canvas Loading
+- `getAvailableChatbots()` in `AgentWorkflowMapper.php` - filters to show only unassigned chatbots
+- `NodesController.php` updated to include chatbots in sidebar with category weight -90
+- `addLinkedChatbots()` in `AssistantEditorController.php` - loads chatbots linked to an assistant onto canvas
+
+#### Chatbot Config Panel
+- Comprehensive config schema with all DeepChat block fields
+- Collapsible group sections: Block Placement, Message Settings (expanded), Styling, Advanced, Visibility
+- Toggle switches for boolean fields
+- `fixSelectLabels()` - FlowDrop doesn't use `enumNames` so we post-process selects
+
+#### Visibility Settings (Custom UI)
+Implemented as collapsible subgroups within Visibility section:
+- **Pages**: Textarea + radio buttons (Show/Hide for listed pages)
+- **Response Status**: Checkboxes for 200, 403, 404
+- **Roles**: Checkboxes dynamically loaded from Drupal + Negate toggle
+- **Content Types**: Checkboxes dynamically loaded + Negate toggle
+- **Vocabulary**: Checkboxes dynamically loaded + Negate toggle
+
+Each subgroup header shows "(Not restricted)" or "(Restricted)" status.
+
+#### Chatbot Node Styling
+- Purple gradient background (`#f3e8ff` to `#ede9fe`) via CSS
+- Purple border (`#a855f7`) matching tool node style
+- "CHAT" badge in top-right corner (matches "TOOL" badge on tool nodes)
+- `setupChatbotNodeStyling()` function polls for chatbot nodes and adds styling
+
+#### Panel Width/Scroll Fixes
+- CSS class `flowdrop-chatbot-panel-fix` applied to parent panel
+- Fixed horizontal scrollbar issues with proper box-sizing and max-width
+- Panel width set to 400px
+
+### Files Modified
+| File | Changes |
+|------|---------|
+| `js/flowdrop-agents-editor.js` | Config panel, visibility UI, node styling, validation, save feedback |
+| `css/flowdrop-agents-editor.css` | Chatbot node styling with svelte-flow selectors |
+| `src/Controller/AssistantEditorController.php` | Chatbot loading, config schema, visibility extraction |
+| `src/Controller/Api/NodesController.php` | Chatbot category in sidebar |
+| `src/Controller/Api/AssistantSaveController.php` | Chatbot save logic with block entity creation |
+| `src/Service/AgentWorkflowMapper.php` | `getAvailableChatbots()`, chatbot config schema |
+
+### Remaining Work
+All features implemented and tested:
+1. ~~**Save Logic**: Implement chatbot saving in `AssistantSaveController`~~ ✓
+2. ~~**Validation**: Warn if chatbot not connected to assistant~~ ✓
+3. ~~**Error Handling**: Save failure messaging~~ ✓
+4. ~~**Testing**: Visual verification of chatbot node styling~~ ✓
+
+### Session 2026-01-06
+
+**Final implementation commit**: `310c6c7`
+
+**Key Fix**: FlowDrop uses **Svelte Flow**, not React Flow. All CSS selectors were targeting `.react-flow__node` but should use `.svelte-flow__node`. This was the root cause of the chatbot node styling not appearing.
+
+**Verified**:
+- Purple gradient background renders on chatbot nodes ✓
+- "CHAT" badge appears in top-right corner ✓
+- Chatbot nodes are visually distinct from agents (green) and tools (orange) ✓
+- Save functionality works - shows "1 chatbot(s) saved" notification ✓
+
+**Screenshots**:
+- `.claude/screenshots/chatbot-node-styling.png` - Shows chatbot node with purple styling
+- `.claude/screenshots/chatbot-save-success.png` - Shows save success notification
 
 ## Reference Files
 

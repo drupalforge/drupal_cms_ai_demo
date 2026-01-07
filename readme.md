@@ -48,3 +48,9 @@ Before running the setup command, make sure you have your OpenAI API key configu
    - Enables AI explorer, logging, and observability modules
 2. Your actual modules will be in the `modules/` directory, but symlinked into `web/modules/contrib/` for Drupal to find them.
 3. DO NOT add this module to the repo. Keep it local only for development purposes.
+
+## FlowDrop source + build workflow
+
+If you need to modify FlowDrop itself (Svelte + @xyflow/svelte), see:
+
+- `docs/flowdrop-build.md`

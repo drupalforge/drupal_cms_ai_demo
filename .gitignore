@@ -1,6 +1,12 @@
 # macOS
 .DS_Store
 
+# Claude screenshots (for AI visual analysis, not needed in repo)
+.claude/screenshots/
+
+# FlowDrop package source (separate branch)
+packages/
+
 /.devpanel/dumps/
 /.devpanel/salt.txt
 /.editorconfig

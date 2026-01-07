@@ -13,6 +13,12 @@ This is a **Drupal CMS demo site** that showcases AI + FlowDrop integration. It 
 
 ### Git Commands
 
+**IMPORTANT: Never commit without explicit user confirmation.** When changes are ready:
+1. Show the user what files changed (`git status`, `git diff --stat`)
+2. Write a proposed commit message
+3. Wait for user to confirm the changes work and approve the commit
+4. Only then execute the commit command
+
 Do not execute git commands that require authentication. Instead, provide the exact commands to the user for manual execution, ensuring they push to the correct remote (GitHub for this repo, drupal.org GitLab for the module).
 
 ## Two-Repo Workflow

@@ -1,6 +1,7 @@
 # Patches
 
-Local patches that Composer applies via `patches.json`.
+Local patches that Composer applies via `patches.json` **and** local patches
+for vendored source (FlowDrop).
 
 ## Structure
 
@@ -10,6 +11,15 @@ patches/
     └── {project}/
         ├── {patch-name}.patch    # The actual patch file
         └── {patch-name}.md       # Issue description & upstream status
+```
+
+Additional folder:
+
+```
+patches/
+└── flowdrop/
+    ├── {patch-name}.patch
+    └── {patch-name}.md
 ```
 
 ## How Patches Are Applied
@@ -55,3 +65,10 @@ When a patch is accepted upstream, remove both the `.patch` and `.md` files and 
 3. Create documentation: `patch-name.md`
 4. Register in `patches.json`
 5. Test: `composer install` (patch should apply cleanly)
+
+## FlowDrop patches (vendored source)
+
+FlowDrop patches in `patches/flowdrop/` are **not** applied by Composer. They
+exist to make upstreaming changes to `d34dman/flowdrop` easy. See:
+
+- `patches/flowdrop/README.md`
