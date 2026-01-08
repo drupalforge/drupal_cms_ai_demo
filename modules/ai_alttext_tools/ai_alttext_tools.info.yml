@@ -1,0 +1,13 @@
+name: AI Alt Text Tools
+type: module
+core_version_requirement: ^10 || ^11
+package: AI
+description: Provides Tools for evaluating alt text of media entities.
+dependencies:
+  - drupal:media
+  - drupal:content_moderation
+  - ai:ai
+  - ai_provider_openai:ai_provider_openai
+  - ai_agents:ai_agents
+  - tool:tool
+  - key:key

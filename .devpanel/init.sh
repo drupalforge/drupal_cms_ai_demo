@@ -163,7 +163,12 @@ drush -y pm:en ai_agents_explorer ai_api_explorer ai_logging ai_observability
 #== Install core Flowdrop modules.
 echo
 echo 'Install core Flowdrop modules.'
-drush -y pm:en flowdrop flowdrop_ui flowdrop_runtime flowdrop_pipeline flowdrop_workflow
+drush -y pm:en flowdrop flowdrop_runtime flowdrop_pipeline flowdrop_workflow
+
+#== Install Flowdrop UI module.
+echo
+echo 'Install Flowdrop UI module.'
+drush -y pm:en flowdrop_ui
 
 #== Install Flowdrop UI Agents.
 echo
@@ -172,8 +177,8 @@ drush -y pm:en flowdrop_ui_agents
 
 #== Install Alt Text Tools.
 echo
-echo 'Install Alt Text Tools.'
-drush -y pm:en alt_text_tools
+echo 'Install AI Alt Text Tools.'
+drush -y pm:en ai_alttext_tools
 
 #== Enable AI logging (requests and responses).
 drush -n cset ai_logging.settings prompt_logging 1
@@ -182,22 +187,20 @@ drush -n cset ai_logging.settings prompt_logging_output 1
 #== Apply Bundle Lister Demo recipe.
 echo
 echo 'Apply Bundle Lister Demo recipe.'
-time drush -q recipe ../recipes/bundle_lister_demo
+if ! drush config:get ai_agents.ai_agent.bundle_lister_agent id 2>/dev/null | grep -q 'bundle_lister_agent'; then
+  time drush -q recipe ../recipes/bundle_lister_demo
+else
+  echo 'Bundle Lister Demo recipe already applied, skipping...'
+fi
 
-#== Apply Bundle Lister Demo recipe.
+#== Apply Alt Text Evaluator Demo recipe.
 echo
 echo 'Apply Alt Text Evaluator Demo recipe.'
-time drush -q recipe ../recipes/alt_text_evaluator_demo
-
-#== Install the agent creation agent.
-echo
-echo 'Install the agent creation agent.'
-time drush -n en ai_agent_agent
-
-#== Apply Fetch MCP Client Demo recipe.
-echo
-echo 'Apply Fetch MCP Client Demo recipe.'
-time drush -q recipe ../recipes/fetch_mcp_client_demo
+if ! drush config:get field.storage.media.field_alt_text_score id 2>/dev/null | grep -q 'field_alt_text_score'; then
+  time drush -q recipe ../recipes/alt_text_evaluator_demo
+else
+  echo 'Alt Text Evaluator Demo recipe already applied, skipping...'
+fi
 
 #== Disable Klaro consent for DeepChat chatbot.
 drush -n cset klaro.klaro_app.deepchat status 0

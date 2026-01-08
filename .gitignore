@@ -26,5 +26,5 @@ packages/
 /vendor/
 /web/
 modules/*
-!/modules/alt_text_tools/
+!/modules/ai_alttext_tools/
 !modules/.gitkeep

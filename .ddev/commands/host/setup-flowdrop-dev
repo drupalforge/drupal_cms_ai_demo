@@ -5,6 +5,13 @@
 ## Example: "ddev setup-flowdrop-dev"
 ## ExecRaw: true
 
+if [ -d "modules/flowdrop_ui" ]; then
+  echo "Flowdrop UI module already cloned, skipping..."
+else
+  echo "Cloning the Flowdrop UI module from the Flowdrop repository..."
+  cd modules && git clone git@git.drupal.org:project/flowdrop_ui.git && cd ..
+fi
+
 if [ -d "modules/flowdrop_ui_agents" ]; then
   echo "Flowdrop UI Agents module already cloned, skipping..."
 else
@@ -12,14 +19,15 @@ else
   cd modules && git clone git@git.drupal.org:project/flowdrop_ui_agents.git && cd ..
 fi
 
-echo "Removing the current contrib version of Flowdrop UI Agents..."
-ddev exec "rm -rf web/modules/contrib/flowdrop_ui_agents"
+echo "Removing the current contrib versions of Flowdrop UI and Flowdrop UI Agents..."
+ddev exec "rm -rf web/modules/contrib/flowdrop_ui web/modules/contrib/flowdrop_ui_agents"
 
 echo "Setting up symlinks for Flowdrop modules..."
+ddev exec "ln -sf /var/www/html/modules/flowdrop_ui web/modules/contrib/flowdrop_ui"
 ddev exec "ln -sf /var/www/html/modules/flowdrop_ui_agents web/modules/contrib/flowdrop_ui_agents"
 
 echo "Setting up symlinks for custom modules..."
-ddev exec "mkdir -p web/modules/custom && ln -sf /var/www/html/modules/alt_text_tools web/modules/custom/alt_text_tools"
+ddev exec "mkdir -p web/modules/custom && ln -sf /var/www/html/modules/ai_alttext_tools web/modules/custom/ai_alttext_tools"
 
 echo "Applying AI recipe..."
 ddev exec 'if [ -n "$OPENAI_API_KEY" ]; then
