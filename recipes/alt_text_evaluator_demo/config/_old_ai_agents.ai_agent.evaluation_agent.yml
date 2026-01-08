@@ -1,0 +1,131 @@
+uuid: fb3c4ffb-866f-4c0b-a096-6ec329291265
+langcode: en
+status: true
+dependencies: {  }
+id: evaluation_agent
+label: 'Evaluation Agent'
+description: 'This agent evaluates the quality of alt text for media entities by reviewing images in their usage context and comparing existing alt text against established guidelines. It ranks alt text quality, provides brief explanations, and can suggest improvements for editor review.'
+system_prompt: |-
+  You are an Alt Text Evaluation & Update Agent for media.
+
+  IMPORTANT: You must process ALL media items provided to you. Continue until every item has been evaluated.
+
+  For each media item:
+  1. Use the "entity_field_values" tool to retrieve media details (entity format: "media:ID").
+  2. Extract the file ID from the media's image field.
+  3. Pass the file ID and current alt text to the "vision_tool".
+  4. The "vision_tool" will return:
+       a. alt_text_score (0-10)
+       b. recommended_alt_text
+       c. alt_text_explanation
+       d. media_id
+  5. Using the returned values (media_id, alt_text_score, and alt_text_explanation), call the "entity_moderation_tool" to:
+        a. Save the media in Draft moderation state
+        b. Store the evaluation details.
+  6. Repeat for the next media item until all are processed.
+
+  If you run out of loops before finishing all items, inform the user how many were completed and how many remain.
+secured_system_prompt: '[ai_agent:agent_instructions]'
+tools:
+  'tool:entity_list': true
+  'tool:entity_field_values': true
+  'tool:vision_tool': true
+  'tool:entity_moderation_tool': true
+tool_settings:
+  'tool:entity_list':
+    return_directly: 0
+    require_usage: 0
+    description_override: ''
+    progress_message: ''
+    use_artifacts: 0
+  'tool:entity_field_values':
+    return_directly: 0
+    require_usage: 0
+    description_override: 'Using this tool get field values and we have to pass entity value in the format "media:1". '
+    progress_message: ''
+    use_artifacts: 0
+  'tool:vision_tool':
+    return_directly: 0
+    require_usage: 0
+    description_override: ''
+    progress_message: ''
+    use_artifacts: 0
+  'tool:entity_moderation_tool':
+    return_directly: 0
+    require_usage: 0
+    description_override: ''
+    progress_message: ''
+    use_artifacts: 0
+orchestration_agent: false
+triage_agent: false
+max_loops: 50
+default_information_tools: ''
+tool_usage_limits:
+  'tool:entity_list':
+    entity_type_id:
+      action: ''
+      hide_property: 0
+      values: ''
+    bundle:
+      action: ''
+      hide_property: 0
+      values: ''
+    amount:
+      action: ''
+      hide_property: 0
+      values: ''
+    offset:
+      action: ''
+      hide_property: 0
+      values: ''
+    fields:
+      action: ''
+      hide_property: 0
+      values: ''
+    sort_field:
+      action: ''
+      hide_property: 0
+      values: ''
+    sort_order:
+      action: ''
+      hide_property: 0
+      values: ''
+  'tool:entity_field_values':
+    entity:
+      action: ''
+      hide_property: 0
+      values: ''
+    fields:
+      action: ''
+      hide_property: 0
+      values: ''
+  'tool:vision_tool':
+    image_id:
+      action: ''
+      hide_property: 0
+      values: ''
+    current_alt_text:
+      action: ''
+      hide_property: 0
+      values: ''
+  'tool:entity_moderation_tool':
+    media_id:
+      action: ''
+      hide_property: 0
+      values: ''
+    alt_score:
+      action: ''
+      hide_property: 0
+      values: ''
+    alt_explanation:
+      action: ''
+      hide_property: 0
+      values: ''
+    moderation_state:
+      action: ''
+      hide_property: 0
+      values: ''
+exclude_users_role: false
+masquerade_roles: {  }
+structured_output_enabled: false
+structured_output_schema: ''
