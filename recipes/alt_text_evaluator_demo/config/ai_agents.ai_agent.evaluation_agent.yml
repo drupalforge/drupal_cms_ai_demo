@@ -40,7 +40,7 @@ tool_settings:
   'tool:entity_field_values':
     return_directly: 0
     require_usage: 0
-    description_override: ''
+    description_override: 'Using this tool get field values and we have to pass entity value in the format "media:1". '
     progress_message: ''
     use_artifacts: 0
   'tool:vision':
@@ -55,13 +55,13 @@ tool_settings:
     description_override: ''
     progress_message: ''
     use_artifacts: 0
-  'tool:entity_load_by_id':
+  'tool:entity_save':
     return_directly: 0
     require_usage: 0
     description_override: ''
     progress_message: ''
     use_artifacts: 0
-  'tool:entity_save':
+  'tool:entity_load_by_id':
     return_directly: 0
     require_usage: 0
     description_override: ''
