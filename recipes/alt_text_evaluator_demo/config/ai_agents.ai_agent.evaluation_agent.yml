@@ -37,7 +37,25 @@ tools:
   'tool:vision': true
   'tool:entity_field_values': true
 tool_settings:
+  'tool:entity_field_values':
+    return_directly: 0
+    require_usage: 0
+    description_override: ''
+    progress_message: ''
+    use_artifacts: 0
+  'tool:vision':
+    return_directly: 0
+    require_usage: 0
+    description_override: ''
+    progress_message: ''
+    use_artifacts: 0
   'tool:field_set_value':
+    return_directly: 0
+    require_usage: 0
+    description_override: ''
+    progress_message: ''
+    use_artifacts: 0
+  'tool:entity_load_by_id':
     return_directly: 0
     require_usage: 0
     description_override: ''
@@ -50,24 +68,6 @@ tool_settings:
     progress_message: ''
     use_artifacts: 0
   'tool:entity_revision_add':
-    return_directly: 0
-    require_usage: 0
-    description_override: ''
-    progress_message: ''
-    use_artifacts: 0
-  'tool:entity_load_by_id':
-    return_directly: 0
-    require_usage: 0
-    description_override: ''
-    progress_message: ''
-    use_artifacts: 0
-  'tool:vision':
-    return_directly: 0
-    require_usage: 0
-    description_override: ''
-    progress_message: ''
-    use_artifacts: 0
-  'tool:entity_field_values':
     return_directly: 0
     require_usage: 0
     description_override: ''
