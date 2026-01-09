@@ -5,18 +5,24 @@
 ## Example: "ddev setup-flowdrop-dev"
 ## ExecRaw: true
 
+# Ensure we're in the project directory
+cd "$DDEV_APPROOT" || exit 1
+
+# Create modules directory if it doesn't exist
+mkdir -p modules
+
 if [ -d "modules/flowdrop_ui" ]; then
   echo "Flowdrop UI module already cloned, skipping..."
 else
   echo "Cloning the Flowdrop UI module from the Flowdrop repository..."
-  cd modules && git clone git@git.drupal.org:project/flowdrop_ui.git && cd ..
+  git clone git@git.drupal.org:project/flowdrop_ui.git modules/flowdrop_ui
 fi
 
 if [ -d "modules/flowdrop_ui_agents" ]; then
   echo "Flowdrop UI Agents module already cloned, skipping..."
 else
   echo "Cloning the Flowdrop UI Agents module from the Flowdrop repository..."
-  cd modules && git clone git@git.drupal.org:project/flowdrop_ui_agents.git && cd ..
+  git clone git@git.drupal.org:project/flowdrop_ui_agents.git modules/flowdrop_ui_agents
 fi
 
 echo "Removing the current contrib versions of Flowdrop UI and Flowdrop UI Agents..."
