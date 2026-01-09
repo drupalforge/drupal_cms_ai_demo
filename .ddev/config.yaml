@@ -14,6 +14,14 @@ hooks:
         - exec: test -f .vscode/launch.json || mkdir -p .vscode && cp .ddev/launch.json .vscode/
         # Remove nested .ddev directories from contrib modules
         - exec: rm -rf web/modules/contrib/*/.ddev || true
+        # Reset any uncommitted changes in contrib modules to allow composer updates
+        - exec: |
+            for module_dir in web/modules/contrib/*; do
+              if [ -d "$module_dir/.git" ]; then
+                echo "Resetting git changes in $(basename $module_dir)..."
+                cd "$module_dir" && git reset --hard HEAD && git clean -fd && cd - > /dev/null
+              fi
+            done || true
         # Run initial setup tasks.
         - exec: .devpanel/init.sh && drush cr
 use_dns_when_possible: true
