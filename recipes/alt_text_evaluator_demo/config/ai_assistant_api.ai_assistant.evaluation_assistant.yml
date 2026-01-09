@@ -1,0 +1,34 @@
+langcode: en
+status: true
+dependencies: {  }
+id: evaluation_assistant
+label: 'Evaluation Assistant'
+description: ''
+system_prompt: ''
+pre_action_prompt: ''
+instructions: 'Help the User evaluate alt text quality for media images based on EU accessibility guidelines. Use the available tools to analyze images and provide scores.'
+allow_history: session
+history_context_length: '2'
+error_message: 'I am sorry, something went terribly wrong. Please try to ask me again.'
+specific_error_messages:
+  AiBadRequestException: ''
+  AiRateLimitException: ''
+  AiQuotaException: ''
+  AiSetupFailureException: ''
+  AiRequestErrorException: ''
+llm_provider: __default__
+llm_model: __default__
+llm_configuration:
+  max_tokens: 4096
+  temperature: 1.0
+  frequency_penalty: 0
+  presence_penalty: 0
+  top_p: 1.0
+actions_enabled: {  }
+roles:
+  anonymous: 0
+  authenticated: 0
+  content_editor: 0
+  administrator: 0
+use_function_calling: false
+ai_agent: evaluation_assistant

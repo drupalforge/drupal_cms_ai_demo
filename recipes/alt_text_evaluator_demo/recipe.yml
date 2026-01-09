@@ -4,6 +4,7 @@ type: 'AI Demo'
 
 install:
   - ai_agents
+  - ai_assistant_api
   - tool
   - tool_entity
   - workflows
@@ -17,6 +18,9 @@ config:
   import:
     ai_agents:
       - ai_agents.ai_agent.evaluation_agent
+      - ai_agents.ai_agent.evaluation_assistant
+    ai_assistant_api:
+      - ai_assistant_api.ai_assistant.evaluation_assistant
     field:
       - field.storage.media.field_alt_text_score
       - field.field.media.image.field_alt_text_score
