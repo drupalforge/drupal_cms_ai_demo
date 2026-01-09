@@ -30,8 +30,14 @@ time sudo rm -rf lost+found
 #== Composer install.
 echo
 if [ -f composer.json ]; then
-  echo 'Run composer update.'
-  time composer -n update --no-dev --no-progress
+  # Check if flowdrop_ui_agents is symlinked (development mode)
+  if [ -L "web/modules/contrib/flowdrop_ui_agents" ]; then
+    echo 'Development mode detected: flowdrop_ui_agents is symlinked, using composer install.'
+    time composer -n install --no-dev --no-progress
+  else
+    echo 'Run composer update.'
+    time composer -n update --no-dev --no-progress
+  fi
   echo
   # Update patches.lock.json if composer-patches v2 is installed
   if composer show --locked cweagans/composer-patches ^2 &> /dev/null; then
@@ -44,7 +50,13 @@ else
   time source .devpanel/composer_setup.sh
   time source .devpanel/composer_extra.sh
   echo
-  time composer -n update --no-dev --no-progress
+  # Check if flowdrop_ui_agents is symlinked (development mode)
+  if [ -L "web/modules/contrib/flowdrop_ui_agents" ]; then
+    echo 'Development mode detected: flowdrop_ui_agents is symlinked, using composer install.'
+    time composer -n install --no-dev --no-progress
+  else
+    time composer -n update --no-dev --no-progress
+  fi
 fi
 
 #== Create the private files directory.
