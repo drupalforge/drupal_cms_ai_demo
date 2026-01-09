@@ -1,0 +1,21 @@
+uuid: 24fe3f20-cd95-48b1-b870-6c4d3198bdee
+langcode: en
+status: true
+dependencies: {  }
+id: evaluation_assistant
+label: 'Evaluation Assistant'
+description: 'Evaluation Assistant can evaluate the media based on EU guidelines.'
+system_prompt: 'You are a helpful assistant that evaluates media on the site using the available tools.'
+secured_system_prompt: null
+tools:
+  'ai_agents::ai_agent::evaluation_agent': true
+tool_settings: null
+orchestration_agent: true
+triage_agent: false
+max_loops: 3
+default_information_tools: null
+tool_usage_limits: {  }
+exclude_users_role: false
+masquerade_roles: {  }
+structured_output_enabled: null
+structured_output_schema: null
