@@ -88,7 +88,7 @@ if [ -n "${DDEV_HOSTNAME:-}" ]; then
   echo 'DDEV detected: Creating symlinks for custom modules.'
   mkdir -p web/modules/custom
   for module_dir in modules/*; do
-    if [ -d "$module_dir" ] && [ "$(basename "$module_dir")" != "flowdrop_ui_agents" ]; then
+    if [ -d "$module_dir" ] && [ "$(basename "$module_dir")" != "flowdrop_ui_agents" ] && [ "$(basename "$module_dir")" != "flowdrop_ui" ]; then
       module_name=$(basename "$module_dir")
       if [ ! -e "web/modules/custom/$module_name" ]; then
         echo "  Symlinking $module_name..."
@@ -100,7 +100,7 @@ else
   echo 'Production environment detected: Copying custom modules.'
   mkdir -p web/modules/custom
   for module_dir in modules/*; do
-    if [ -d "$module_dir" ] && [ "$(basename "$module_dir")" != "flowdrop_ui_agents" ]; then
+    if [ -d "$module_dir" ] && [ "$(basename "$module_dir")" != "flowdrop_ui_agents" ] && [ "$(basename "$module_dir")" != "flowdrop_ui" ]; then
       module_name=$(basename "$module_dir")
       if [ ! -e "web/modules/custom/$module_name" ]; then
         echo "  Copying $module_name..."
