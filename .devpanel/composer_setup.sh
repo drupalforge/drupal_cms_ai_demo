@@ -217,8 +217,8 @@ composer config repositories.codemirror '{
 # Add Webform libraries and Composer Patches.
 composer require -n --no-update \
     codemirror/codemirror \
-    cweagans/composer-patches:^2@beta \
-    drupal/ai_provider_litellm:@beta \
+    cweagans/composer-patches \
+    drupal/ai_provider_litellm \
     jquery/inputmask \
     jquery/intl-tel-input \
     jquery/rateit \
