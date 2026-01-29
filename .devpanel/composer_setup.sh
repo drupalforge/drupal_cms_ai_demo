@@ -3,9 +3,11 @@ set -eu -o pipefail
 cd $APP_ROOT
 
 # Create required composer.json and composer.lock files.
-composer create-project --no-install ${PROJECT:=drupal/cms}
-cp -r "${PROJECT#*/}"/* ./
-rm -rf "${PROJECT#*/}" patches.lock.json
+composer create-project --no-install ${PROJECT:=drupal/cms:^1}
+PROJECT_DIR=${PROJECT#*/}
+PROJECT_DIR=${PROJECT_DIR%%:*}
+cp -r $PROJECT_DIR/* ./
+rm -rf $PROJECT_DIR patches.lock.json
 
 # Programmatically fix Composer 2.2 allow-plugins to avoid errors.
 composer config --no-plugins allow-plugins.cweagans/composer-patches true
