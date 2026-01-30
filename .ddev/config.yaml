@@ -16,6 +16,7 @@ hooks:
         - exec: .devpanel/init.sh
 use_dns_when_possible: true
 composer_version: "2"
+disable_settings_management: true
 web_environment:
     # Set up DevPanel variables.
     - APP_ROOT=$DDEV_COMPOSER_ROOT
@@ -29,4 +30,3 @@ web_environment:
     - DB_DRIVER=mysql
     - DP_AI_VIRTUAL_KEY=
 corepack_enable: false
-ddev_version_constraint: '>=1.24.0'
