@@ -9,9 +9,6 @@ PROJECT_DIR=${PROJECT_DIR%%:*}
 cp -r $PROJECT_DIR/* ./
 rm -rf $PROJECT_DIR patches.lock.json
 
-# Programmatically fix Composer 2.2 allow-plugins to avoid errors.
-composer config --no-plugins allow-plugins.cweagans/composer-patches true
-
 # Scaffold settings.php.
 composer config -jm extra.drupal-scaffold.file-mapping '{
     "[web-root]/sites/default/settings.php": {
@@ -219,7 +216,6 @@ composer config repositories.codemirror '{
 # Add Webform libraries and Composer Patches.
 composer require -n --no-update \
     codemirror/codemirror \
-    cweagans/composer-patches \
     drupal/ai_provider_litellm \
     jquery/inputmask \
     jquery/intl-tel-input \

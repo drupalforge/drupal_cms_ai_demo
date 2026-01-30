@@ -99,12 +99,6 @@ if [ -z "$(drush status --field=db-status)" ]; then
     drush -n cset ai_assistant_api.ai_assistant.drupal_cms_assistant llm_provider __default__
     drush -n cset klaro.klaro_app.deepchat status 0
   fi
-
-  echo
-  echo 'Tell Automatic Updates about patches.'
-  drush -n cset --input-format=yaml package_manager.settings additional_trusted_composer_plugins '["cweagans/composer-patches"]'
-  drush -n cset --input-format=yaml package_manager.settings include_unknown_files_in_project_root '["patches.json", "patches.lock.json"]'
-  time drush ev '\Drupal::moduleHandler()->invoke("automatic_updates", "modules_installed", [[], FALSE])'
 else
   echo 'Update database.'
   time drush -n updb
