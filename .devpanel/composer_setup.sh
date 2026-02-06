@@ -3,11 +3,9 @@ set -eu -o pipefail
 cd $APP_ROOT
 
 # Create required composer.json and composer.lock files.
-composer create-project --no-install ${PROJECT:=drupal/cms:^1}
-PROJECT_DIR=${PROJECT#*/}
-PROJECT_DIR=${PROJECT_DIR%%:*}
-cp -r $PROJECT_DIR/* ./
-rm -rf $PROJECT_DIR patches.lock.json
+composer create-project --no-install ${PROJECT:=drupal/cms}:^1
+cp -r ${PROJECT#*/}/* ./
+rm -rf ${PROJECT#*/} patches.lock.json
 
 # Scaffold settings.php.
 composer config -jm extra.drupal-scaffold.file-mapping '{
