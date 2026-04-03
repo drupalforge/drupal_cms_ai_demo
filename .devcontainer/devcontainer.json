@@ -1,5 +1,5 @@
 {
-    "name": "Drupal CMS AI Demo (PHP 8.3)",
+    "name": "Drupal CMS AI Demo (PHP 8.5)",
     "dockerComposeFile": "docker-compose.yml",
     "service": "app",
     "workspaceFolder": "/var/www/html",

@@ -4,7 +4,7 @@ hooks:
   git_hooks:
     push:
       - branch: "main"
-        # matches release on "master" branch only
+        # matches release on "main" branch only
         # run commands or scripts from cmd below... eg:
         # echo "Hello World"
         # date >> test.txt

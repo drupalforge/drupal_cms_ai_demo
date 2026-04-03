@@ -15,11 +15,6 @@
 # For GNU Affero General Public License see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
-#== If webRoot has not been difined, we will set appRoot to webRoot
-if [[ ! -n "$WEB_ROOT" ]]; then
-  export WEB_ROOT=$APP_ROOT
-fi
-
 STATIC_FILES_PATH="$WEB_ROOT/sites/default/files/"
 SETTINGS_FILES_PATH="$WEB_ROOT/sites/default/settings.php"
 
@@ -27,7 +22,6 @@ SETTINGS_FILES_PATH="$WEB_ROOT/sites/default/settings.php"
 if [ ! -d "$STATIC_FILES_PATH" ]; then
   mkdir -p $STATIC_FILES_PATH
 fi
-
 
 #== Composer install.
 if [[ -f "$APP_ROOT/composer.json" ]]; then
@@ -45,7 +39,7 @@ echo $DRUPAL_HASH_SALT > $APP_ROOT/.devpanel/salt.txt
 [[ ! -d $STATIC_FILES_PATH ]] && sudo mkdir --mode 775 $STATIC_FILES_PATH || sudo chmod 775 -R $STATIC_FILES_PATH
 
 #== Extract static files
-if [[ $(mysql -h$DB_HOST -P$DB_PORT -u$DB_USER -p$DB_PASSWORD $DB_NAME -e "show tables;") == '' ]]; then
+if [ -z "$(drush status --field=db-status)" ]; then
   if [[ -f "$APP_ROOT/.devpanel/dumps/files.tgz" ]]; then
     echo  'Extract static files ...'
     sudo mkdir -p $STATIC_FILES_PATH
@@ -59,5 +53,3 @@ if [[ $(mysql -h$DB_HOST -P$DB_PORT -u$DB_USER -p$DB_PASSWORD $DB_NAME -e "show 
     drush sqlq --file="$APP_ROOT/.devpanel/dumps/db.sql.gz" --file-delete
   fi
 fi
-
-drush cr

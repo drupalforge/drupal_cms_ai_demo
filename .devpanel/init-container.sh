@@ -16,7 +16,7 @@
 # ----------------------------------------------------------------------
 
 #== Import database
-if [[ $(mysql -h$DB_HOST -P$DB_PORT -u$DB_USER -p$DB_PASSWORD $DB_NAME -e "show tables;") == '' ]]; then
+if [ -z "$(drush status --field=db-status)" ]; then
   if [[ -f "$APP_ROOT/.devpanel/dumps/db.sql.gz" ]]; then
     echo  'Import mysql file ...'
     drush sqlq --file="$APP_ROOT/.devpanel/dumps/db.sql.gz" --file-delete
@@ -37,5 +37,5 @@ echo 'Run cron.'
 drush cron
 echo
 echo 'Populate caches.'
-drush cache:warm
+drush cache:warm &> /dev/null || :
 $APP_ROOT/.devpanel/warm
