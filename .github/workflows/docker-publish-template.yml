@@ -13,6 +13,7 @@ jobs:
     uses: drupalforge/docker_publish_action/.github/workflows/docker-publish.yml@main
     with:
       dockerhub_username: ${{ vars.DOCKERHUB_USERNAME }}
+      base_image: devpanel/php:8.5-base-rc
     secrets:
       dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
       dp_ai_virtual_key: ${{ secrets.DP_AI_VIRTUAL_KEY }}
