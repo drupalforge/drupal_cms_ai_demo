@@ -1,0 +1,7 @@
+{
+    "patches": {
+        "drupal/core": {
+            "#3531174: Add configuration for additional known files in project root": "https://git.drupalcode.org/issue/drupal-3531174/-/compare/eccc454363a947d3eb71a1ca7fa0e134dce002c0...96208fc1e12b4548c115d02dd80b9cfbd4e5bed7?format=diff"
+        }
+    }
+}

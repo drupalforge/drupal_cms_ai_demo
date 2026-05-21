@@ -1,0 +1,6 @@
+# Crontab for Supercronic: environment variables (including APP_ROOT) are
+# provided by the process that launches Supercronic (systemd, Docker, etc.).
+# The job uses the APP_ROOT environment variable and writes logs under
+# $APP_ROOT/logs/automatic_updates.log. `php` is resolved via the PATH
+# provided to Supercronic.
+0 * * * * php "$APP_ROOT"/web/modules/contrib/automatic_updates/auto-update >> "$APP_ROOT"/logs/automatic_updates.log 2>&1
