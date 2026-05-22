@@ -25,6 +25,7 @@ fi
 
 if [[ -n "$DB_SYNC_VOL" ]]; then
   if [[ ! -f "/var/www/build/.devpanel/init-container.sh" ]]; then
+    php $APP_ROOT/modules/contrib/automatic_updates/auto-update
     echo  'Sync volume...'
     sudo chown -R 1000:1000 /var/www/build 
     rsync -av --delete --delete-excluded $APP_ROOT/ /var/www/build
