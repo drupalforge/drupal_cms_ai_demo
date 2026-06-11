@@ -249,7 +249,6 @@ composer config repositories.codemirror '{
 # Add Webform libraries and Composer Patches.
 composer require -n --no-update \
     codemirror/codemirror \
-    cweagans/composer-patches \
     drupal/ai_provider_litellm \
     jquery/image-picker \
     jquery/inputmask \

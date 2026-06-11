@@ -91,8 +91,6 @@ if [ -z "$(drush status --field=db-status)" ]; then
 
   echo
   echo 'Enable Automatic Updates.'
-  drush -n cset --input-format=yaml package_manager.settings additional_trusted_composer_plugins '["cweagans/composer-patches","drupal/site_template_helper"]'
-  drush -n cset --input-format=yaml package_manager.settings include_unknown_files_in_project_root '["patches.json","patches.lock.json"]'
   drush -n cset --input-format=yaml automatic_updates.settings unattended '{"method":"console","level":"patch"}'
   time drush ev '\Drupal::moduleHandler()->invoke("automatic_updates", "modules_installed", [[], FALSE])'
   time php web/modules/contrib/automatic_updates/auto-update
