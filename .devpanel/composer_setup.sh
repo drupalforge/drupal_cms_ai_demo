@@ -7,9 +7,6 @@ composer create-project --no-install ${PROJECT:=drupal/cms}:^1
 cp -r ${PROJECT#*/}/* ./
 rm -rf ${PROJECT#*/} patches.lock.json
 
-# Programmatically fix Composer 2.2 allow-plugins to avoid errors.
-composer config --no-plugins allow-plugins.cweagans/composer-patches true
-
 # Scaffold settings.php.
 composer config -jm extra.drupal-scaffold.file-mapping '{
     "[web-root]/sites/default/settings.php": {
