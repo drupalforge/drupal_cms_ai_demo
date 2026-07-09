@@ -14,32 +14,24 @@
 #
 # For GNU Affero General Public License see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
-
 echo -e "-------------------------------"
 echo -e "| DevPanel Quickstart Creator |"
 echo -e "-------------------------------\n"
 
-
-# Preparing
-WORK_DIR=$APP_ROOT
-TMP_DIR=/tmp/devpanel/quickstart
-DUMPS_DIR=$TMP_DIR/dumps
-STATIC_FILES_DIR=$WEB_ROOT/sites/default/files
-
+# Prepare.
+export PATH="$APP_ROOT/vendor/bin:$PATH"
+DUMPS_DIR=/tmp/devpanel/quickstart/dumps
 mkdir -p $DUMPS_DIR
+mkdir -p .devpanel/dumps
+drush cr
 
-# Step 1 - Compress drupal database
-cd $WORK_DIR
+# Step 1 - Export database.
+cd $APP_ROOT
 echo -e "> Export database to $APP_ROOT/.devpanel/dumps"
-mkdir -p $APP_ROOT/.devpanel/dumps
-drush cr --quiet
 drush sql-dump --result-file=../.devpanel/dumps/db.sql --gzip
 
-# Step 2 - Compress static files
-cd $WORK_DIR
+# Step 2 - Export static files.
 echo -e "> Compress static files"
-tar czf $DUMPS_DIR/files.tgz -C $STATIC_FILES_DIR .
-
+tar czf $DUMPS_DIR/files.tgz -C $WEB_ROOT/sites/default/files .
 echo -e "> Store files.tgz to $APP_ROOT/.devpanel/dumps"
-mkdir -p $APP_ROOT/.devpanel/dumps
-mv $DUMPS_DIR/files.tgz $APP_ROOT/.devpanel/dumps/files.tgz
+mv $DUMPS_DIR/files.tgz .devpanel/dumps/files.tgz

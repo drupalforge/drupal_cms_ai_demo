@@ -2,7 +2,7 @@ name: Docker build and push template
 on:
   push:
     branches:
-      - main
+      - "main"
   schedule:
     - cron: '0 11 * * 0,1,2,3,4,5'
   workflow_dispatch:
@@ -13,7 +13,7 @@ jobs:
     uses: drupalforge/docker_publish_action/.github/workflows/docker-publish.yml@main
     with:
       dockerhub_username: ${{ vars.DOCKERHUB_USERNAME }}
-      base_image: devpanel/php:8.5-base-rc
+      base_image: devpanel/php:8.5-base
     secrets:
       dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
       dp_ai_virtual_key: ${{ secrets.DP_AI_VIRTUAL_KEY }}

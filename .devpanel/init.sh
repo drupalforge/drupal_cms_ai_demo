@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+export PATH="$APP_ROOT/vendor/bin:$PATH"
 if [ -n "${DEBUG_SCRIPT:-}" ]; then
   set -x
 fi
@@ -15,8 +16,6 @@ export COMPOSER_NO_BLOCKING=1
 # Keep deprecated var for compatibility with Composer versions where
 # COMPOSER_NO_BLOCKING/--no-blocking is not supported yet.
 export COMPOSER_NO_SECURITY_BLOCKING=1
-# For faster performance, don't install dev dependencies.
-export COMPOSER_NO_DEV=1
 
 #== Remove root-owned files.
 echo
@@ -36,27 +35,33 @@ else
   time source .devpanel/composer_setup.sh
   echo
 fi
-time composer -n update --no-progress
+time composer -n install --no-progress
 
 #== Create the private files directory.
 if [ ! -d private ]; then
   echo
   echo 'Create the private files directory.'
-  time mkdir private
+  time mkdir -m 775 private
+else
+  sudo chmod 775 -R private
 fi
 
 #== Create the config sync directory.
 if [ ! -d config/sync ]; then
   echo
   echo 'Create the config sync directory.'
-  time mkdir -p config/sync
+  time mkdir -pm 775 config/sync
+else
+  sudo chmod 775 -R config
 fi
 
 #== Install Drupal.
 echo
 if [ -z "$(drush status --field=db-status)" ]; then
   echo 'Install Drupal.'
-  time drush -n si
+  until time drush -n si; do
+    :
+  done
 
   #== Apply the AI recipe.
   if [ -n "${DP_AI_VIRTUAL_KEY:-}" ]; then
@@ -107,6 +112,13 @@ echo
 echo 'Populate caches.'
 time drush cache:warm &> /dev/null || :
 time .devpanel/warm
+time .devpanel/warm /user/login
+
+#== Fix ownership for strict permissions.
+echo
+echo 'Fix ownership for strict permissions.'
+time sudo chmod 775 -R web/sites/default/files
+time sudo chown -R ${APACHE_RUN_USER:=www-data} web/sites/default/files private config/sync
 
 #== Finish measuring script time.
 INIT_DURATION=$SECONDS

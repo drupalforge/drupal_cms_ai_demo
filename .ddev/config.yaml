@@ -29,5 +29,6 @@ web_environment:
     - DB_NAME=db
     - DP_APP_ID=ai_demo
     - DB_DRIVER=mysql
+    - COMPOSER_HOME=/home/www/.config/composer
     - DP_AI_VIRTUAL_KEY=
 corepack_enable: false

@@ -6,9 +6,11 @@ Files in the `.devpanel` directory control DevPanel deployment for this app.
 - [`custom_package_installer.sh`](custom_package_installer.sh): Installs
   extra system software. Runs as root. This is called by
   /scripts/apache-start.sh before Apache starts.
-- [`init-container.sh`](init-container.sh): Checks for a database dump and
-  imports it.
-- [`init.sh`](init.sh): Performs additional startup tasks. Supporting files:
+- [`init-container.sh`](init-container.sh): Startup for registry mode (a
+  DevPanel template setting). Imports a database dump and copies files from the
+  image’s app directory to an external volume.
+- [`init.sh`](init.sh): Startup for non-registry mode and image build.
+  Supporting files:
   - [`composer_setup.sh`](composer_setup.sh): Generates composer.json and
     composer.lock files. Not needed if you supply these files yourself.
   - [`settings.devpanel.php`](settings.devpanel.php): Settings for running
@@ -18,6 +20,8 @@ Files in the `.devpanel` directory control DevPanel deployment for this app.
     script. Make sure this works with your Composer project.
   - [`warm`](warm): Loads any path to build caches. If no path is provided,
     defaults to /.
+- [`Dockerfile`](Dockerfile): Provides the `COMPOSER_HOME` variable required by
+  the Drupal Automatic Updates web UI.
 
 
 ## Git integration

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ---------------------------------------------------------------------
-# Copyright (C) 2024 DevPanel
+# Copyright (C) 2026 DevPanel
 # You can install any service here to support your project
 # Please make sure you run apt update before install any packages
 # Example:
@@ -13,16 +13,24 @@ if [ -n "$DEBUG_SCRIPT" ]; then
 fi
 
 # Install APT packages.
-if ! command -v npm >/dev/null 2>&1; then
+if ! command -v direnv >/dev/null 2>&1; then
   apt-get update
-  apt-get install -y jq nano npm ripgrep
+  apt-get install -y direnv jq nano npm ripgrep
 fi
 
-# Enable AVIF support in GD extension if not already enabled.
-if [ -z "$(php --ri gd | grep AVIF)" ]; then
-  apt-get install -y libavif-dev
-  docker-php-ext-configure gd --with-avif --with-freetype --with-jpeg --with-webp
-  docker-php-ext-install gd
+# Enable direnv in Bash shells and silence its startup log lines.
+if ! grep -Fq '# DevPanel direnv configuration.' /etc/bash.bashrc; then
+  cat >>/etc/bash.bashrc <<'EOF'
+
+# DevPanel direnv configuration.
+export DIRENV_LOG_FORMAT=
+eval "$(direnv hook bash)"
+EOF
+fi
+
+# Trust the project .envrc when present so vendor/bin is activated automatically.
+if command -v direnv >/dev/null 2>&1 && [ -f "$APP_ROOT/.envrc" ]; then
+  runuser -u "${SUDO_USER:-$USER}" -- direnv allow "$APP_ROOT" || true
 fi
 
 PECL_UPDATED=false

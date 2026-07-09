@@ -5,7 +5,10 @@ cd $APP_ROOT
 # Create required composer.json and composer.lock files.
 composer create-project --no-install ${PROJECT:=drupal/cms}:^1
 cp -r ${PROJECT#*/}/* ./
-rm -rf ${PROJECT#*/} patches.lock.json
+rm -rf ${PROJECT#*/}
+
+# Programmatically fix Composer 2.2 allow-plugins to avoid errors.
+composer config --no-plugins allow-plugins.symfony/runtime true
 
 # Scaffold settings.php.
 composer config -jm extra.drupal-scaffold.file-mapping '{
@@ -243,7 +246,7 @@ composer config repositories.codemirror '{
     }
 }'
 
-# Add Webform libraries and Composer Patches.
+# Add Webform libraries and LiteLLM.
 composer require -n --no-update \
     codemirror/codemirror \
     drupal/ai_provider_litellm \
