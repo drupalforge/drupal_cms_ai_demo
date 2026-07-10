@@ -59,9 +59,14 @@ fi
 echo
 if [ -z "$(drush status --field=db-status)" ]; then
   echo 'Install Drupal.'
-  until time drush -n si; do
-    :
-  done
+  # Outside DDEV/dev container, fail immediately on the first install error.
+  if [ -z "${DRUPALFORGE_DEVCONTAINER:-}" ] && [ "${IS_DDEV_PROJECT:-}" != "true" ]; then
+    time drush -n si
+  else
+    until time drush -n si; do
+      :
+    done
+  fi
 
   #== Apply the AI recipe.
   if [ -n "${DP_AI_VIRTUAL_KEY:-}" ]; then
