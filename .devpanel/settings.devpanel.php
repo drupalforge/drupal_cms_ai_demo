@@ -23,7 +23,12 @@ $realpath = realpath($settings['file_private_path']);
 if (!empty($realpath)) {
   $settings['file_private_path'] = $realpath;
 }
-$settings['trusted_host_patterns'][] = getenv('DP_HOSTNAME') ?: '.*';
+if (getenv('DP_HOSTNAME')) {
+  $settings['trusted_host_patterns'][] = '^' . preg_quote(getenv('DP_HOSTNAME'), '/') . '$';
+}
+else {
+  $settings['trusted_host_patterns'][] = '.*';
+}
 $settings['enable_html5_validation'] = FALSE;
 $settings['testing_package_manager'] = TRUE;
 

@@ -61,7 +61,7 @@ if $PECL_UPDATED && /etc/init.d/apache2 status > /dev/null; then
   /etc/init.d/apache2 reload
 fi
 
-if [ -n "$APP_ROOT/.devpanel/crontab" ]; then
+if [ -f "${APP_ROOT%/}/.devpanel/crontab" ]; then
   # Install supercronic.
   if ! command -v supercronic >/dev/null 2>&1; then
     curl -fsSL "https://github.com/aptible/supercronic/releases/latest/download/supercronic-linux-$(dpkg --print-architecture)" \
@@ -71,9 +71,9 @@ if [ -n "$APP_ROOT/.devpanel/crontab" ]; then
   # Load project cron file.
   if command -v supercronic >/dev/null 2>&1; then
     # Start only if no existing supercronic is watching this file.
-    if ! pgrep -f "supercronic -inotify ${APP_ROOT}/\.devpanel/crontab" >/dev/null 2>&1; then
-      echo "Starting supercronic to watch ${APP_ROOT}/.devpanel/crontab"
-      runuser -u "${SUDO_USER:-$USER}" -- supercronic -inotify "$APP_ROOT/.devpanel/crontab" &
+    if ! pgrep -f "supercronic -inotify ${APP_ROOT%/}/\.devpanel/crontab" >/dev/null 2>&1; then
+      echo "Starting supercronic to watch ${APP_ROOT%/}/.devpanel/crontab"
+      runuser -u "${SUDO_USER:-$USER}" -- supercronic -inotify "${APP_ROOT%/}/.devpanel/crontab" &
     fi
   fi
 fi

@@ -28,7 +28,7 @@ export COMPOSER_NO_SECURITY_BLOCKING=1
 #== Remove root-owned files.
 echo
 echo Remove root-owned files.
-time sudo rm -rf lost+found
+sudo rm -rf lost+found
 
 #== Composer install.
 echo
@@ -49,27 +49,21 @@ composer -n install --no-progress
 if [ ! -d web/sites/default/files ]; then
   echo
   echo 'Create the public files directory.'
-  mkdir -pm 775 web/sites/default/files
-else
-  sudo chmod 775 -R web/sites/default/files
+  mkdir -pm 2775 web/sites/default/files
 fi
 
 #== Create the private files directory.
 if [ ! -d private ]; then
   echo
   echo 'Create the private files directory.'
-  mkdir -m 775 private
-else
-  sudo chmod 775 -R private
+  mkdir -m 2775 private
 fi
 
 #== Create the config sync directory.
 if [ ! -d config/sync ]; then
   echo
   echo 'Create the config sync directory.'
-  mkdir -pm 775 config/sync
-else
-  sudo chmod 775 -R config
+  mkdir -pm 2775 config/sync
 fi
 
 if [ -z "$(drush status --field=db-status)" ]; then
@@ -105,4 +99,5 @@ drush cache:warm &> /dev/null || :
 #== Fix ownership for strict permissions.
 echo
 echo 'Fix ownership for strict permissions.'
-sudo chown -R ${APACHE_RUN_USER:=www-data} web/sites/default/files private config/sync
+sudo chmod 2775 -R web/sites/default/files private config/sync
+sudo chown -R ${APACHE_RUN_USER:=www-data}:${APACHE_RUN_GROUP:=www-data} web/sites/default/files private config/sync
